@@ -1,0 +1,166 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Select Assignments</title>
+    <link rel="stylesheet" href="{% static 'css/assignments.css' %}">
+    <link href="https://cdn.jsdelivr.net/npm/select2/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2/dist/js/select2.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#section, #assignments, #status').select2({
+                placeholder: "Select an option",
+                allowClear: true
+            });
+
+            $('#filter-form').on('submit', function() {
+                $('#filter-form :input').filter(function() {
+                    return !this.value;
+                }).attr('disabled', 'disabled');
+                return true;
+            });
+
+            $("input[name='student_ids']").change(function() {
+                toggleSendEmailButton();
+            });
+
+            function toggleSendEmailButton() {
+                const anyChecked = $("input[name='student_ids']:checked").length > 0;
+                $("#send-email-button").toggle(anyChecked);
+            }
+
+            $("#select-all").change(function() {
+                $("input[name='student_ids']").prop('checked', this.checked);
+                toggleSendEmailButton();
+            });
+        });
+
+        function previewMessage() {
+            const defaultMessage = `Dear {student_name},\n\nThis is a reminder to complete your assignments.\n\nRegards,\nYour TA`;
+            $("#custom-message").val(defaultMessage);
+            $("#message-modal").show();
+        }
+
+        function closeModal() {
+            $("#message-modal").hide();
+        }
+
+        function sendEmail() {
+            const selectedStudents = $("input[name='student_ids']:checked")
+                .map(function() { return this.value; }).get();
+
+            $.ajax({
+                url: "{% url 'send_email' %}",
+                type: 'POST',
+                data: JSON.stringify({
+                    student_ids: selectedStudents,
+                    custom_message: $("#custom-message").val()
+                }),
+                contentType: 'application/json',
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}'
+                },
+                success: function(response) {
+                    alert("Emails sent successfully!");
+                    closeModal();
+                },
+                error: function(error) {
+                    alert("Failed to send emails.");
+                    console.log(error);
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+    <header>
+        <img src="{% static 'images/Logo.jpeg' %}" alt="Student Portal Logo" height="50">
+        <nav>
+            <ul>
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li><a href="{% url 'last_login' %}">Last login</a></li>
+                <li><a href="{% url 'select_assignments' %}">Assignments</a></li>
+            </ul>
+        </nav>
+    </header>
+    <h1>Select Assignments</h1>
+    <section>
+        <form id="filter-form" method="post" action="{% url 'select_assignments' %}">
+            {% csrf_token %}
+            <div class="filter-controls">
+                <label for="section">Section:</label>
+                <select id="section" name="section" multiple>
+                    {% for section in sections %}
+                    <option value="{{ section }}" {% if section in selected_sections %}selected{% endif %}>{{ section }}</option>
+                    {% endfor %}
+                </select>
+
+                <label for="assignments">Assignments:</label>
+                <select id="assignments" name="assignments" multiple>
+                    {% for assignment in assignments %}
+                    <option value="{{ assignment.id }}" {% if assignment.id in selected_assignments %}selected{% endif %}>{{ assignment.title }}</option>
+                    {% endfor %}
+                </select>
+
+                <label for="status">Status:</label>
+                <select id="status" name="status">
+                    <option value="all" {% if selected_status == 'all' %}selected{% endif %}>All</option>
+                    {% for status in statuses %}
+                    <option value="{{ status }}" {% if status == selected_status %}selected{% endif %}>{{ status }}</option>
+                    {% endfor %}
+                </select>
+
+                <button type="submit">Filter</button>
+                <button id="send-email-button" style="display:none;" type="button" onclick="previewMessage()">Send Email</button>
+            </div>
+        </form>
+
+        <div>
+            {% if selected_sections or selected_assignments or selected_status %}
+                <p>Showing results for:
+                    {% if selected_sections %} Sections: {{ selected_sections|join:", " }}{% endif %}
+                    {% if selected_assignments %} Assignments: {{ selected_assignments|join:", " }}{% endif %}
+                    {% if selected_status %} Status: {{ selected_status }}{% endif %}
+                </p>
+            {% else %}
+                <p>No filters applied.</p>
+            {% endif %}
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th><input type="checkbox" id="select-all"></th>
+                    <th>Student Name</th>
+                    <th>Email</th>
+                    <th>Assignments</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for student_id, student_info in student_assignments.items %}
+                    {% for assignment_title, status in student_info.assignments %}
+                        <tr>
+                            <td><input type="checkbox" name="student_ids" value="{{ student_id }}"></td>
+                            <td>{{ student_info.name }}</td>
+                            <td>{{ student_info.email }}</td>
+                            <td>{{ assignment_title }}</td>
+                            <td>{{ status }}</td>
+                        </tr>
+                    {% endfor %}
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <!-- Message Modal -->
+        <div id="message-modal" style="display:none;">
+            <h2>Custom Message</h2>
+            <textarea id="custom-message" rows="10" cols="50"></textarea>
+            <button class="button-green" type="button" onclick="sendEmail()">Send</button>
+            <button class="button-red" type="button" onclick="closeModal()">Cancel</button>
+        </div>
+    </section>
+</body>
+</html>

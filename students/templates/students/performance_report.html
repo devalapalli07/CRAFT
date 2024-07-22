@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Performance Report</title>
+</head>
+<body>
+    <h1>Performance Report</h1>
+    <ul>
+        {% for performance in performances %}
+        <li>{{ performance.student.name }} - {{ performance.assignment.title }}: {{ performance.grade }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

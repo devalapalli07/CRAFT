@@ -1,0 +1,111 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Student Portal Home</title>
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+    <link href="https://cdn.jsdelivr.net/npm/select2/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2/dist/js/select2.min.js"></script>
+</head>
+<body>
+    <header>
+        <img src="{% static 'images/Logo.jpeg' %}" alt="Student Portal Logo" height="50">
+        <nav>
+            <ul>
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li><a href="{% url 'last_login' %}">Last login</a></li>
+                <li><a href="{% url 'select_assignments' %}">Assignments</a></li>
+            </ul>
+        </nav>
+    </header>
+    <h1>Welcome to the CRAFT Student Portal</h1>
+    <section>
+        <h2>Students List</h2>
+
+        <div class="filter-controls">
+            <label for="section">Section:</label>
+            <select id="section" name="section" multiple onchange="updateStudentList()">
+                {% for section in sections %}
+                <option value="{{ section }}">{{ section }}</option>
+                {% endfor %}
+            </select>
+
+            <label for="filter-name">Name:</label>
+            <input type="text" id="filter-name" oninput="updateStudentList()">
+
+            <label for="filter-email">Email:</label>
+            <input type="text" id="filter-email" oninput="updateStudentList()">
+
+            <label for="filter-sis-id">SIS ID:</label>
+            <input type="text" id="filter-sis-id" oninput="updateStudentList()">
+        </div>
+
+        <div id="studentTable">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>SIS ID</th>
+                        <th>Section Name</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for student in students %}
+                    <tr>
+                        <td>{{ student.name }}</td>
+                        <td>{{ student.email }}</td>
+                        <td class="sis-id-cell">{{ student.sis_id }}</td>
+                        <td class="section-name-cell">{{ student.section_name|slice:"11:" }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <script>
+            $(document).ready(function() {
+                $('#section').select2({
+                    placeholder: "Select an option",
+                    allowClear: true
+                });
+                updateStudentList();  // Load initial student data on page load
+            });
+
+            function updateStudentList() {
+                const name = document.getElementById('filter-name').value;
+                const email = document.getElementById('filter-email').value;
+                const sisId = document.getElementById('filter-sis-id').value;
+                const sections = $('#section').select2('val');
+
+                const params = new URLSearchParams({
+                    name, email, sis_id: sisId, sections: sections.join(',')
+                });
+
+                fetch(`/students/filter/?${params.toString()}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        const studentTable = document.getElementById('studentTable').getElementsByTagName('tbody')[0];
+                        studentTable.innerHTML = '';  // Clear the table
+
+                        data.students.forEach(student => {
+                            const row = studentTable.insertRow();
+                            row.insertCell(0).innerText = student.name;
+                            row.insertCell(1).innerText = student.email;
+                            const sisIdCell = row.insertCell(2);
+                            sisIdCell.innerText = student.sis_id;
+                            sisIdCell.classList.add('sis-id-cell');
+                            const sectionNameCell = row.insertCell(3);
+                            sectionNameCell.innerText = student.section_name.slice(0,11);
+                            sectionNameCell.classList.add('section-name-cell');
+                        });
+                    })
+                    .catch(error => console.error('Error loading the students:', error));
+            }
+        </script>
+    </section>
+</body>
+</html>

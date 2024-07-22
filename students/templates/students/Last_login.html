@@ -1,0 +1,125 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Last Login Activity</title>
+    <link rel="stylesheet" href="{% static 'css/last_login.css' %}">
+    <link href="https://cdn.jsdelivr.net/npm/select2/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2/dist/js/select2.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $("#select-all").click(function() {
+                $("input[name='student_ids']").prop('checked', this.checked);
+                toggleSendEmailButton();
+            });
+
+            $("input[name='student_ids']").change(function() {
+                toggleSendEmailButton();
+            });
+
+            function toggleSendEmailButton() {
+                const anyChecked = $("input[name='student_ids']:checked").length > 0;
+                $("#send-email-button").toggle(anyChecked);
+            }
+
+            // Initialize Select2 for the inactive_days dropdown
+            $('#inactive_days').select2();
+        });
+
+        function previewMessage() {
+            const defaultMessage = `Dear {student_name},\n\nThis is a reminder to log in to your account. You have been inactive on the course CGS 2100 for {inactive_days} days.\n\nRegards,\nYour TA`;
+            $("#custom-message").val(defaultMessage);
+            $("#message-modal").show();
+        }
+
+        function closeModal() {
+            $("#message-modal").hide();
+        }
+function sendEmail() {
+    const selectedStudents = $("input[name='student_ids']:checked")
+        .map(function() { return this.value; }).get();
+
+    $.ajax({
+        url: "{% url 'send_email' %}",
+        type: 'POST',
+        data: JSON.stringify({
+            student_ids: selectedStudents,
+            custom_message: $("#custom-message").val()
+        }),
+        contentType: 'application/json',
+        headers: {
+            'X-CSRFToken': '{{ csrf_token }}'
+        },
+        success: function(response) {
+            alert("Emails sent successfully!");
+            closeModal();
+        },
+        error: function(error) {
+            alert("Failed to send emails.");
+            console.log(error);
+        }
+    });
+}
+
+
+    </script>
+</head>
+<body>
+    <header>
+        <img src="{% static 'images/Logo.jpeg' %}" alt="Student Portal Logo">
+        <nav>
+            <ul>
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li><a href="{% url 'last_login' %}">Last login</a></li>
+                <li><a href="{% url 'select_assignments' %}">Assignments</a></li>
+            </ul>
+        </nav>
+    </header>
+    <h1>Last Login Activity</h1>
+    <section>
+        <div class="filter-controls">
+            <label for="inactive_days">Filter by Inactive Days:</label>
+            <select id="inactive_days" onchange="window.location.href = '?inactive_days=' + this.value;">
+                <option value="">Select Days</option>
+                {% for day in inactive_days_options %}
+                    <option value="{{ day }}" {% if day == inactive_days_parameter %}selected{% endif %}>{{ day }}</option>
+                {% endfor %}
+            </select>
+            <button id="send-email-button" style="display:none;" onclick="previewMessage()">Send Email</button>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th><input type="checkbox" id="select-all"></th>
+                    <th>Student Name</th>
+                    <th>Email</th>
+                    <th>Last Activity</th>
+                    <th>Inactive Days</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for enrollment in enrollments %}
+                <tr>
+                    <td><input type="checkbox" name="student_ids" value="{{ enrollment.student_id }}"></td>
+                    <td>{{ enrollment.student.name }}</td>
+                    <td>{{ enrollment.student.email }}</td>
+                    <td>{{ enrollment.last_activity_at|date:"Y-m-d H:i" }}</td>
+                    <td>{{ enrollment.inactive_days }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <!-- Message Modal -->
+        <div id="message-modal" style="display:none;">
+            <h2>Custom Message</h2>
+            <textarea id="custom-message" rows="10" cols="50"></textarea>
+            <button class="button-green" onclick="sendEmail()">Send</button>
+            <button class="button-red" onclick="closeModal()">Cancel</button>
+        </div>
+    </section>
+</body>
+</html>
