@@ -1,0 +1,25 @@
+2025-03-31 14:15:24,620 - INFO - Starting data fetch from Canvas API...
+2025-03-31 14:18:01,607 - INFO - Starting data fetch from Canvas API...
+2025-03-31 14:19:21,185 - INFO - No more records to retrieve.
+2025-03-31 14:19:21,186 - INFO - Total API calls made: 73
+2025-03-31 14:19:21,527 - INFO - Cleaned data saved to: C:\Users\mohan\Downloads\CRAFT-master 3\CRAFT-master\data_exports\cleaned_enrollments_data.xlsx
+2025-03-31 14:24:58,866 - INFO - Starting data fetch from Canvas API...
+2025-03-31 14:26:08,080 - INFO - No more records to retrieve.
+2025-03-31 14:26:08,080 - INFO - Total API calls made: 73
+2025-03-31 14:26:08,510 - INFO - Raw data saved to: C:\Users\mohan\Downloads\CRAFT-master 3\CRAFT-master\data_exports\enrollments_raw.xlsx
+2025-03-31 14:26:08,670 - INFO - Cleaned data saved to: C:\Users\mohan\Downloads\CRAFT-master 3\CRAFT-master\data_exports\cleaned_enrollments_data.xlsx
+2025-03-31 14:35:59,669 - INFO - Starting data fetch from Canvas API...
+2025-03-31 14:37:08,316 - INFO - No more records to retrieve.
+2025-03-31 14:37:08,317 - INFO - Total API calls made: 73
+2025-03-31 14:37:08,762 - INFO - Raw data saved to: C:\Users\mohan\Downloads\CRAFT-master 3\CRAFT-master\data_exports\enrollments_raw.xlsx
+2025-03-31 14:37:08,907 - INFO - Cleaned data saved to: C:\Users\mohan\Downloads\CRAFT-master 3\CRAFT-master\data_exports\cleaned_enrollments_data.xlsx
+2025-03-31 14:46:42,343 - INFO - Starting data fetch from Canvas API...
+2025-03-31 14:47:57,118 - INFO - No more records to retrieve.
+2025-03-31 14:47:57,118 - INFO - Total API calls made: 73
+2025-03-31 14:47:57,558 - INFO - Raw data saved to: C:\Users\mohan\Downloads\CRAFT-master 3\CRAFT-master\data_exports\enrollments_raw.xlsx
+2025-03-31 14:47:57,725 - INFO - Cleaned data saved to: C:\Users\mohan\Downloads\CRAFT-master 3\CRAFT-master\data_exports\cleaned_enrollments_data.xlsx
+2025-04-03 10:26:53,032 - INFO - Starting data fetch from Canvas API...
+2025-04-03 10:27:55,778 - INFO - No more records to retrieve.
+2025-04-03 10:27:55,778 - INFO - Total API calls made: 73
+2025-04-03 10:27:56,329 - INFO - Raw data saved to: C:\Users\mohan\Downloads\CRAFT-master 3\CRAFT-master\data_exports\enrollments_raw.xlsx
+2025-04-03 10:27:56,579 - INFO - Cleaned data saved to: C:\Users\mohan\Downloads\CRAFT-master 3\CRAFT-master\data_exports\cleaned_enrollments_data.xlsx

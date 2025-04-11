@@ -1,16 +1,16 @@
 from django import forms
 from django.shortcuts import  redirect, render
 from django.http import JsonResponse
-from django.db.models import Q
+from django.db.models import Prefetch,Q
 from collections import defaultdict
 import re
 import requests
-from .models import Studentlist,Enrollment,Assignment,Student 
-from .forms import StudentFilterForm
+from .models import Studentlist,Enrollment,Assignment,Submission
 from django.shortcuts import render, redirect
 from django.utils import timezone
 from django.views.decorators.csrf import csrf_exempt
 import json
+from django.core.paginator import Paginator
 
  # Make sure the model name is correct
 
@@ -85,7 +85,7 @@ def last_login(request):
 
 @csrf_exempt
 def send_email(request):
-    YOUR_ACCESS_TOKEN = '13~WmvQhDfNzYraCcCxn4MFEx2mAaxxPXenykwuZ24NJQQPFXz4P6v4W7hJXJ2NyzBz'
+    YOUR_ACCESS_TOKEN = '13~WE6aXzRMrPTheVDUVn6cfQtV2VP7EtvDvfPJkt9fDEH9h9MY8JAJQQtB7a786mWu'
     if request.method == 'POST':
         try:
             # Parse the JSON body
@@ -143,96 +143,149 @@ def send_email(request):
     return JsonResponse({'status': 'failure'}, status=400)
 
 
-def select_assignments(request):
-    students = Studentlist.objects.all().prefetch_related('assignments')
 
-    # Retrieve necessary data for filtering
+
+# def send_assignment_email(request):
+#     YOUR_ACCESS_TOKEN = '13~FT9GuNvrtD9NEHXhf6mwNwVcMZDUf4wFQHyUGYwkcr3FNHD7ATU7ka6uULcDBkR9'
+#     if request.method == 'POST':
+#         try:
+#             Parse the JSON body
+#             data = json.loads(request.body.decode('utf-8'))
+#             student_ids = data.get('student_ids', [])
+#             custom_message = data.get('custom_message', '')
+#             assignment_ids = data.get('assignments', [])
+
+#             Log the received data
+#             print(f"Received data: {data}")
+
+#             Get the assignment titles based on the selected assignment IDs
+#             assignments = Assignment.objects.filter(id__in=assignment_ids)
+#             assignment_titles = ', '.join([assignment.title for assignment in assignments])
+
+#             Log the assignment titles
+#             print(f"Assignment Titles: {assignment_titles}")
+
+#             students = Enrollment.objects.filter(student_id__in=student_ids)
+
+#             for enrollment in students:
+#                 student = enrollment.student  # This is the related student instance
+
+#                 Log the student information
+#                 print(f"Student: {student.name}, Student ID: {student.student_id}, Email: {student.email}")
+
+#                 Ensure the subject and body are set correctly
+#                 personalized_subject = "Reminder for Assignment Completion"
+#                 personalized_body = custom_message.format(
+#                     student_name=student.name,
+#                     assignments=assignment_titles
+#                 )
+
+#                 data_payload = {
+#                     "recipients": [student.student_id],  # Use student_id from Studentlist model
+#                     "subject": personalized_subject,
+#                     "body": personalized_body,
+#                     "group_conversation": False,
+#                 }
+
+#                 Log the payload before sending
+#                 print(f"Sending Data Payload: {data_payload}")
+
+#                 response = requests.post(
+#                     "https://usflearn.instructure.com/api/v1/conversations",
+#                     headers={
+#                         "Authorization": f"Bearer {YOUR_ACCESS_TOKEN}",
+#                         "Content-Type": "application/json"
+#                     },
+#                     json=data_payload
+#                 )
+
+#                 Log the response from the API
+#                 print(f"API Response: {response.text}")
+
+#                 if response.status_code != 201:
+#                     print(f"Failed to send message to {student.email}. Status code: {response.status_code}")
+#                 else:
+#                     print(f"Message sent to {student.email}")
+
+#             return JsonResponse({'status': 'success'})
+#         except json.JSONDecodeError as e:
+#             print(f"JSON decode error: {e}")
+#             return JsonResponse({'status': 'failure', 'error': 'Invalid JSON'}, status=400)
+#         except Exception as e:
+#             print(f"An error occurred: {e}")
+#             return JsonResponse({'status': 'failure', 'error': str(e)}, status=500)
+
+#     return JsonResponse({'status': 'failure'}, status=400)
+
+
+def assignments_page(request):
     assignments = Assignment.objects.all()
-    sections = Studentlist.objects.values_list('section_name', flat=True).distinct()
-    statuses = Assignment.objects.values_list('status', flat=True).distinct()
-
-    trimmed_sections = [
-        re.match(r"(CGS\d+\.\d+)", section).group(1) if re.match(r"(CGS\d+\.\d+)", section) else section
-        for section in sections
-    ]
-
-    # Initialize filter values
-    selected_sections = []
-    selected_assignment_titles = []
-    selected_status = 'all'
-
-    filter_form = StudentFilterForm(request.POST or None, sections=trimmed_sections, statuses=statuses)
-    if request.method == 'POST':
-        if filter_form.is_valid():
-            selected_sections = filter_form.cleaned_data['section']
-            selected_assignment_titles = list(filter_form.cleaned_data['assignments'].values_list('title', flat=True))
-            selected_status = filter_form.cleaned_data['status']
-            
-            print(f"Selected Sections: {selected_sections}")  # Debug statement
-            print(f"Selected Assignment Titles: {selected_assignment_titles}")  # Debug statement
-            print(f"Selected Status: {selected_status}")  # Debug statement
-
-            # Initialize the query with all students
-            students = Studentlist.objects.all().prefetch_related('assignments')
-
-            # Create Q objects for each filter
-            queries = Q()
-            if selected_sections:
-                section_queries = Q()
-                for section in selected_sections:
-                    section_queries |= Q(section_name__icontains=section)
-                queries &= section_queries
-            if selected_status and selected_status != 'all':
-                queries &= Q(assignments__status=selected_status)
-            if selected_assignment_titles:
-                queries &= Q(assignments__title__in=selected_assignment_titles)
-
-            # Apply the combined filters
-            students = students.filter(queries).distinct()
-            print(f"Filtered Students: {students.count()}")  # Debug statement
-            print(students.query)  # Print the actual SQL query being executed
-
-    # Prepare a dictionary to store assignments and statuses for each student
-    student_assignments = {}
-    for student in students:
-        student_info = {
-            'name': student.name,
-            'email': student.email,
-        }
-        # Fetch assignments and statuses for the current student that match the selected criteria
-        assignments_queryset = Assignment.objects.filter(student_id=student)
-
-        # Apply the same filtering logic to the assignments
-        assignment_queries = Q()
-        if selected_status and selected_status != 'all':
-            assignment_queries &= Q(status=selected_status)
-        if selected_assignment_titles:
-            assignment_queries &= Q(title__in=selected_assignment_titles)
-
-        # Filter assignments based on the combined criteria
-        assignments_queryset = assignments_queryset.filter(assignment_queries).distinct()
-        assignments_and_statuses = [(assignment.title, assignment.status) for assignment in assignments_queryset]
-
-        # Combine student info with assignments and statuses
-        student_info['assignments'] = assignments_and_statuses
-
-        # Store in the dictionary using student_id as the key
-        student_assignments[student.student_id] = student_info
-
-    return render(request, 'students/select_assignments.html', {
-        'students': students,
-        'filter_form': filter_form,
+    students = Submission.objects.order_by('student__name').values_list(
+        'student__name', flat=True
+    ).distinct()
+    context = {
         'assignments': assignments,
-        'sections': trimmed_sections,
-        'statuses': statuses,
-        'student_assignments': student_assignments,
-        'selected_sections': selected_sections,
-        'selected_assignments': selected_assignment_titles,
-        'selected_status': selected_status,
-    })
+        'students': students,
+    }
+    
+    if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+        # Get all filter parameters
+        student_name = request.GET.get('student', '')
+        selected_assignment = request.GET.get('assignment')
+        status_filter = request.GET.get('status')
+        score_filter = request.GET.get('score')
+        page_number = request.GET.get('page', 1)
 
+        # Build query
+        submissions = Submission.objects.select_related('student', 'assignment')
+        
+        # Student name filter
+        if student_name:
+            submissions = submissions.filter(student__name=student_name)
+        
+        # Assignment filter
+        if selected_assignment:
+            submissions = submissions.filter(assignment__id=selected_assignment)
+        
+        # Status filter
+        if status_filter:
+            submissions = submissions.filter(status=status_filter)
+        
+        # Score filter
+        if score_filter:
+            if '<' in score_filter:
+                max_score = int(score_filter.split('<')[1])
+                submissions = submissions.filter(score__lt=max_score)
+            elif '>' in score_filter:
+                min_score = int(score_filter.split('>')[1])
+                submissions = submissions.filter(score__gt=min_score)
+            else:
+                try:
+                    score_range = score_filter.split('-')
+                    if len(score_range) == 2:
+                        min_score, max_score = map(int, score_range)
+                        submissions = submissions.filter(score__gte=min_score, score__lte=max_score)
+                except (ValueError, IndexError):
+                    pass
 
-
+        # Paginate results
+        paginator = Paginator(submissions.order_by('student__name'), 20)
+        page = paginator.get_page(page_number)
+        
+        # Serialize data
+        submissions_data = [{
+            'name': sub.student.name,
+            'assignment': sub.assignment.title,
+            'status': sub.get_status_display(),  # Show display value
+            'score': sub.score
+        } for sub in page]
+        
+        return JsonResponse({
+            'submissions': submissions_data,
+            'has_next': page.has_next()
+        })
+    
+    return render(request, 'students/assignments.html', context)
 class MessageForm(forms.Form):
     message = forms.CharField(widget=forms.Textarea)
 

@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-$2ou4+**%$9rc6lt4k96f!&4g&&g3c3d3-zi4f-#=5pfceix==
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['asp-ined-internal-a7c9gmg3f5h7escb.eastus-01.azurewebsites.net']
 
 
 # Application definition
@@ -48,6 +48,9 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.cache.UpdateCacheMiddleware',
+    'django.middleware.cache.FetchFromCacheMiddleware',
+    
 ]
 
 ROOT_URLCONF = 'CRAFT.urls'
@@ -76,12 +79,18 @@ WSGI_APPLICATION = 'CRAFT.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'mssql',  # Use the correct backend name
+        'NAME': 'InEdSQLInternal',
+        'USER':'craftlogindb',
+        'PASSWORD':'wNKqXIvQ1vVzFnGcMDyT',
+        'HOST': 'inedsqldbserverdb01.database.windows.net',
+        'PORT': '1433',  # Default port (1433)
+        'OPTIONS': {
+            'driver': 'ODBC Driver 18 for SQL Server',
+            'extra_params': 'Encrypt=Yes;TrustServerCertificate=Yes',  # Critical fix
+        },
     }
 }
-
-
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
 
@@ -118,6 +127,8 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),  # Adjust this if your static directory is somewhere else
 ]
