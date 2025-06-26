@@ -11,6 +11,7 @@ from django.utils import timezone
 from django.views.decorators.csrf import csrf_exempt
 import json
 from django.core.paginator import Paginator
+import requests
 
  # Make sure the model name is correct
 

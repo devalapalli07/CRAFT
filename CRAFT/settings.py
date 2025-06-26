@@ -10,7 +10,8 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
-from pathlib import Path,os
+import os 
+from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -25,8 +26,8 @@ SECRET_KEY = 'django-insecure-$2ou4+**%$9rc6lt4k96f!&4g&&g3c3d3-zi4f-#=5pfceix==
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['asp-ined-internal-a7c9gmg3f5h7escb.eastus-01.azurewebsites.net','127.0.0.1', 'localhost']
-
+#ALLOWED_HOSTS = ['asp-ined-internal-a7c9gmg3f5h7escb.eastus-01.azurewebsites.net','127.0.0.1', 'localhost',]
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -42,6 +43,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'CRAFT.middleware.AuthenticationMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -51,6 +53,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.cache.UpdateCacheMiddleware',
     'django.middleware.cache.FetchFromCacheMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     
 ]
 
@@ -92,6 +95,30 @@ DATABASES = {
         },
     }
 }
+#settings.py (local/dev variant)
+
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "mssql",
+#         "NAME": "CRAFT",
+#         "HOST": r"Mohan",           # ⇐ INSTANCE name
+#         "PORT": "",                 # ⇐ blank when you specify an instance
+#         "USER": "",                 # integrated auth
+#         "PASSWORD": "",
+#         "OPTIONS": {
+#             "driver": "ODBC Driver 18 for SQL Server",
+#             "extra_params": (
+#                 "Trusted_Connection=yes;"  # Windows auth
+#                 "Encrypt=no;"              # local box → turn off TLS
+#                 "TrustServerCertificate=yes;"
+#             ),
+#         },
+#     }
+# }
+
+
+
+
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
 

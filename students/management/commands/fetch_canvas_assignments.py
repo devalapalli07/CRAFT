@@ -29,8 +29,8 @@ class Command(BaseCommand):
         excel_file = os.path.join(output_dir, 'assignments_cleaned.xlsx')
 
         # Canvas API
-        token = "13~WE6aXzRMrPTheVDUVn6cfQtV2VP7EtvDvfPJkt9fDEH9h9MY8JAJQQtB7a786mWu"
-        base_url = "https://usflearn.instructure.com/api/v1/courses/1930464/analytics/users/{}/assignments?per_page=100"
+        token = "13~L8mFHryGEXXC8n4u2aktPrkmwPuzmWMazM7nQ2PyTULKVNcK82x2yMH6vw2AGK9f"
+        base_url = "https://usflearn.instructure.com/api/v1/courses/1962040/analytics/users/{}/assignments?per_page=100"
 
         roster_path = os.path.join(base_dir, "data_exports", "StudentRoster.csv")
 

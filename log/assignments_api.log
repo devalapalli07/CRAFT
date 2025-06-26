@@ -1,128 +1,158 @@
-2025-03-31 18:29:44,132 - ERROR - Failed to fetch data for student 5267717: 404 Client Error: Not Found for url: https://usflearn.instructure.com/api/v1/courses/1930464/users/5267717/assignments?per_page=100
-2025-03-31 18:29:44,147 - ERROR - Failed to fetch data for student 5468111: 404 Client Error: Not Found for url: https://usflearn.instructure.com/api/v1/courses/1930464/users/5468111/assignments?per_page=100
-2025-03-31 18:29:44,150 - ERROR - Failed to fetch data for student 4663829: 404 Client Error: Not Found for url: https://usflearn.instructure.com/api/v1/courses/1930464/users/4663829/assignments?per_page=100
-2025-03-31 18:29:44,152 - ERROR - Failed to fetch data for student 5306137: 404 Client Error: Not Found for url: https://usflearn.instructure.com/api/v1/courses/1930464/users/5306137/assignments?per_page=100
-2025-03-31 18:29:44,166 - ERROR - Failed to fetch data for student 5094443: 404 Client Error: Not Found for url: https://usflearn.instructure.com/api/v1/courses/1930464/users/5094443/assignments?per_page=100
-2025-03-31 18:29:44,172 - ERROR - Failed to fetch data for student 5294659: 404 Client Error: Not Found for url: https://usflearn.instructure.com/api/v1/courses/1930464/users/5294659/assignments?per_page=100
-2025-03-31 18:29:45,905 - ERROR - Failed to fetch data for student 5247181: 404 Client Error: Not Found for url: https://usflearn.instructure.com/api/v1/courses/1930464/users/5247181/assignments?per_page=100
-2025-03-31 18:29:45,916 - ERROR - Failed to fetch data for student 5030439: 404 Client Error: Not Found for url: https://usflearn.instructure.com/api/v1/courses/1930464/users/5030439/assignments?per_page=100
-2025-03-31 18:29:45,942 - ERROR - Failed to fetch data for student 5172671: 404 Client Error: Not Found for url: https://usflearn.instructure.com/api/v1/courses/1930464/users/5172671/assignments?per_page=100
-2025-03-31 18:29:45,957 - ERROR - Failed to fetch data for student 5255043: 404 Client Error: Not Found for url: https://usflearn.instructure.com/api/v1/courses/1930464/users/5255043/assignments?per_page=100
-2025-03-31 18:29:45,970 - ERROR - Failed to fetch data for student 5287061: 404 Client Error: Not Found for url: https://usflearn.instructure.com/api/v1/courses/1930464/users/5287061/assignments?per_page=100
-2025-03-31 18:29:45,970 - ERROR - Failed to fetch data for student 5326381: 404 Client Error: Not Found for url: https://usflearn.instructure.com/api/v1/courses/1930464/users/5326381/assignments?per_page=100
-2025-03-31 18:29:45,977 - ERROR - Failed to fetch data for student 5266535: 404 Client Error: Not Found for url: https://usflearn.instructure.com/api/v1/courses/1930464/users/5266535/assignments?per_page=100
-2025-03-31 18:29:46,001 - ERROR - Failed to fetch data for student 5283235: 404 Client Error: Not Found for url: https://usflearn.instructure.com/api/v1/courses/1930464/users/5283235/assignments?per_page=100
-2025-03-31 18:29:46,001 - ERROR - Failed to fetch data for student 5348825: 404 Client Error: Not Found for url: https://usflearn.instructure.com/api/v1/courses/1930464/users/5348825/assignments?per_page=100
-2025-03-31 18:29:46,012 - ERROR - Failed to fetch data for student 5337663: 404 Client Error: Not Found for url: https://usflearn.instructure.com/api/v1/courses/1930464/users/5337663/assignments?per_page=100
-2025-03-31 18:29:48,316 - ERROR - Failed to fetch data for student 4855619: 404 Client Error: Not Found for url: https://usflearn.instructure.com/api/v1/courses/1930464/users/4855619/assignments?per_page=100
-2025-03-31 18:29:48,350 - ERROR - Failed to fetch data for student 5235159: 404 Client Error: Not Found for url: https://usflearn.instructure.com/api/v1/courses/1930464/users/5235159/assignments?per_page=100
-2025-03-31 18:29:48,369 - ERROR - Failed to fetch data for student 5051869: 404 Client Error: Not Found for url: https://usflearn.instructure.com/api/v1/courses/1930464/users/5051869/assignments?per_page=100
-2025-03-31 18:29:48,397 - ERROR - Failed to fetch data for student 5265497: 404 Client Error: Not Found for url: https://usflearn.instructure.com/api/v1/courses/1930464/users/5265497/assignments?per_page=100
-2025-03-31 18:29:48,406 - ERROR - Failed to fetch data for student 5298223: 404 Client Error: Not Found for url: https://usflearn.instructure.com/api/v1/courses/1930464/users/5298223/assignments?per_page=100
-2025-03-31 18:29:48,428 - ERROR - Failed to fetch data for student 5085661: 404 Client Error: Not Found for url: https://usflearn.instructure.com/api/v1/courses/1930464/users/5085661/assignments?per_page=100
-2025-03-31 18:29:48,428 - ERROR - Failed to fetch data for student 5311501: 404 Client Error: Not Found for url: https://usflearn.instructure.com/api/v1/courses/1930464/users/5311501/assignments?per_page=100
-2025-03-31 18:29:48,438 - ERROR - Failed to fetch data for student 4843499: 404 Client Error: Not Found for url: https://usflearn.instructure.com/api/v1/courses/1930464/users/4843499/assignments?per_page=100
-2025-03-31 18:29:48,465 - ERROR - Failed to fetch data for student 5309993: 404 Client Error: Not Found for url: https://usflearn.instructure.com/api/v1/courses/1930464/users/5309993/assignments?per_page=100
-2025-03-31 18:29:48,496 - ERROR - Failed to fetch data for student 5329041: 404 Client Error: Not Found for url: https://usflearn.instructure.com/api/v1/courses/1930464/users/5329041/assignments?per_page=100
-2025-03-31 18:29:50,537 - ERROR - Failed to fetch data for student 5335225: 404 Client Error: Not Found for url: https://usflearn.instructure.com/api/v1/courses/1930464/users/5335225/assignments?per_page=100
-2025-03-31 18:29:50,543 - ERROR - Failed to fetch data for student 5294371: 404 Client Error: Not Found for url: https://usflearn.instructure.com/api/v1/courses/1930464/users/5294371/assignments?per_page=100
-2025-03-31 18:29:50,562 - ERROR - Failed to fetch data for student 5000133: 404 Client Error: Not Found for url: https://usflearn.instructure.com/api/v1/courses/1930464/users/5000133/assignments?per_page=100
-2025-03-31 18:29:50,608 - ERROR - Failed to fetch data for student 4935305: 404 Client Error: Not Found for url: https://usflearn.instructure.com/api/v1/courses/1930464/users/4935305/assignments?per_page=100
-2025-03-31 18:29:50,612 - ERROR - Failed to fetch data for student 5315373: 404 Client Error: Not Found for url: https://usflearn.instructure.com/api/v1/courses/1930464/users/5315373/assignments?per_page=100
-2025-03-31 18:29:50,627 - ERROR - Failed to fetch data for student 5289559: 404 Client Error: Not Found for url: https://usflearn.instructure.com/api/v1/courses/1930464/users/5289559/assignments?per_page=100
-2025-03-31 18:29:50,635 - ERROR - Failed to fetch data for student 5281469: 404 Client Error: Not Found for url: https://usflearn.instructure.com/api/v1/courses/1930464/users/5281469/assignments?per_page=100
-2025-03-31 18:29:50,637 - ERROR - Failed to fetch data for student 5291109: 404 Client Error: Not Found for url: https://usflearn.instructure.com/api/v1/courses/1930464/users/5291109/assignments?per_page=100
-2025-03-31 18:29:50,666 - ERROR - Failed to fetch data for student 5032631: 404 Client Error: Not Found for url: https://usflearn.instructure.com/api/v1/courses/1930464/users/5032631/assignments?per_page=100
-2025-03-31 18:29:50,672 - ERROR - Failed to fetch data for student 5279349: 404 Client Error: Not Found for url: https://usflearn.instructure.com/api/v1/courses/1930464/users/5279349/assignments?per_page=100
-2025-03-31 18:29:52,832 - ERROR - Failed to fetch data for student 5390795: 404 Client Error: Not Found for url: https://usflearn.instructure.com/api/v1/courses/1930464/users/5390795/assignments?per_page=100
-2025-03-31 18:29:52,897 - ERROR - Failed to fetch data for student 5386157: 404 Client Error: Not Found for url: https://usflearn.instructure.com/api/v1/courses/1930464/users/5386157/assignments?per_page=100
-2025-03-31 18:29:52,934 - ERROR - Failed to fetch data for student 5325147: 404 Client Error: Not Found for url: https://usflearn.instructure.com/api/v1/courses/1930464/users/5325147/assignments?per_page=100
-2025-03-31 18:29:52,939 - ERROR - Failed to fetch data for student 5236343: 404 Client Error: Not Found for url: https://usflearn.instructure.com/api/v1/courses/1930464/users/5236343/assignments?per_page=100
-2025-03-31 18:29:52,950 - ERROR - Failed to fetch data for student 5330713: 404 Client Error: Not Found for url: https://usflearn.instructure.com/api/v1/courses/1930464/users/5330713/assignments?per_page=100
-2025-03-31 18:29:52,967 - ERROR - Failed to fetch data for student 5241441: 404 Client Error: Not Found for url: https://usflearn.instructure.com/api/v1/courses/1930464/users/5241441/assignments?per_page=100
-2025-03-31 18:29:52,977 - ERROR - Failed to fetch data for student 5249349: 404 Client Error: Not Found for url: https://usflearn.instructure.com/api/v1/courses/1930464/users/5249349/assignments?per_page=100
-2025-03-31 18:29:52,982 - ERROR - Failed to fetch data for student 5242369: 404 Client Error: Not Found for url: https://usflearn.instructure.com/api/v1/courses/1930464/users/5242369/assignments?per_page=100
-2025-03-31 18:29:52,989 - ERROR - Failed to fetch data for student 5267653: 404 Client Error: Not Found for url: https://usflearn.instructure.com/api/v1/courses/1930464/users/5267653/assignments?per_page=100
-2025-03-31 18:29:53,793 - ERROR - Failed to fetch data for student 5285519: 404 Client Error: Not Found for url: https://usflearn.instructure.com/api/v1/courses/1930464/users/5285519/assignments?per_page=100
-2025-03-31 18:29:55,141 - ERROR - Failed to fetch data for student 5238841: 404 Client Error: Not Found for url: https://usflearn.instructure.com/api/v1/courses/1930464/users/5238841/assignments?per_page=100
-2025-03-31 18:29:55,228 - ERROR - Failed to fetch data for student 5342285: 404 Client Error: Not Found for url: https://usflearn.instructure.com/api/v1/courses/1930464/users/5342285/assignments?per_page=100
-2025-03-31 18:29:55,234 - ERROR - Failed to fetch data for student 5206731: 404 Client Error: Not Found for url: https://usflearn.instructure.com/api/v1/courses/1930464/users/5206731/assignments?per_page=100
-2025-03-31 18:29:55,246 - ERROR - Failed to fetch data for student 5301731: 404 Client Error: Not Found for url: https://usflearn.instructure.com/api/v1/courses/1930464/users/5301731/assignments?per_page=100
-2025-03-31 18:29:55,261 - ERROR - Failed to fetch data for student 5333541: 404 Client Error: Not Found for url: https://usflearn.instructure.com/api/v1/courses/1930464/users/5333541/assignments?per_page=100
-2025-03-31 18:29:55,270 - ERROR - Failed to fetch data for student 5242513: 404 Client Error: Not Found for url: https://usflearn.instructure.com/api/v1/courses/1930464/users/5242513/assignments?per_page=100
-2025-03-31 18:29:55,283 - ERROR - Failed to fetch data for student 5278639: 404 Client Error: Not Found for url: https://usflearn.instructure.com/api/v1/courses/1930464/users/5278639/assignments?per_page=100
-2025-03-31 18:29:55,304 - ERROR - Failed to fetch data for student 5281353: 404 Client Error: Not Found for url: https://usflearn.instructure.com/api/v1/courses/1930464/users/5281353/assignments?per_page=100
-2025-03-31 18:29:55,315 - ERROR - Failed to fetch data for student 5322159: 404 Client Error: Not Found for url: https://usflearn.instructure.com/api/v1/courses/1930464/users/5322159/assignments?per_page=100
-2025-03-31 18:29:55,692 - ERROR - Failed to fetch data for student 5467315: 404 Client Error: Not Found for url: https://usflearn.instructure.com/api/v1/courses/1930464/users/5467315/assignments?per_page=100
-2025-03-31 18:29:57,441 - ERROR - Failed to fetch data for student 5292901: 404 Client Error: Not Found for url: https://usflearn.instructure.com/api/v1/courses/1930464/users/5292901/assignments?per_page=100
-2025-03-31 18:29:57,484 - ERROR - Failed to fetch data for student 5039323: 404 Client Error: Not Found for url: https://usflearn.instructure.com/api/v1/courses/1930464/users/5039323/assignments?per_page=100
-2025-03-31 18:29:57,484 - ERROR - Failed to fetch data for student 5342965: 404 Client Error: Not Found for url: https://usflearn.instructure.com/api/v1/courses/1930464/users/5342965/assignments?per_page=100
-2025-03-31 18:29:57,514 - ERROR - Failed to fetch data for student 5291935: 404 Client Error: Not Found for url: https://usflearn.instructure.com/api/v1/courses/1930464/users/5291935/assignments?per_page=100
-2025-03-31 18:29:57,537 - ERROR - Failed to fetch data for student 4616261: 404 Client Error: Not Found for url: https://usflearn.instructure.com/api/v1/courses/1930464/users/4616261/assignments?per_page=100
-2025-03-31 18:29:57,548 - ERROR - Failed to fetch data for student 5340963: 404 Client Error: Not Found for url: https://usflearn.instructure.com/api/v1/courses/1930464/users/5340963/assignments?per_page=100
-2025-03-31 18:29:57,563 - ERROR - Failed to fetch data for student 5320943: 404 Client Error: Not Found for url: https://usflearn.instructure.com/api/v1/courses/1930464/users/5320943/assignments?per_page=100
-2025-03-31 18:29:57,570 - ERROR - Failed to fetch data for student 5273059: 404 Client Error: Not Found for url: https://usflearn.instructure.com/api/v1/courses/1930464/users/5273059/assignments?per_page=100
-2025-03-31 18:29:57,622 - ERROR - Failed to fetch data for student 5349295: 404 Client Error: Not Found for url: https://usflearn.instructure.com/api/v1/courses/1930464/users/5349295/assignments?per_page=100
-2025-03-31 18:29:57,661 - ERROR - Failed to fetch data for student 4912231: 404 Client Error: Not Found for url: https://usflearn.instructure.com/api/v1/courses/1930464/users/4912231/assignments?per_page=100
-2025-03-31 18:29:59,861 - ERROR - Failed to fetch data for student 5302923: 404 Client Error: Not Found for url: https://usflearn.instructure.com/api/v1/courses/1930464/users/5302923/assignments?per_page=100
-2025-03-31 18:29:59,888 - ERROR - Failed to fetch data for student 5267143: 404 Client Error: Not Found for url: https://usflearn.instructure.com/api/v1/courses/1930464/users/5267143/assignments?per_page=100
-2025-03-31 18:29:59,895 - ERROR - Failed to fetch data for student 5238817: 404 Client Error: Not Found for url: https://usflearn.instructure.com/api/v1/courses/1930464/users/5238817/assignments?per_page=100
-2025-03-31 18:29:59,909 - ERROR - Failed to fetch data for student 4869771: 404 Client Error: Not Found for url: https://usflearn.instructure.com/api/v1/courses/1930464/users/4869771/assignments?per_page=100
-2025-03-31 18:29:59,915 - ERROR - Failed to fetch data for student 5271535: 404 Client Error: Not Found for url: https://usflearn.instructure.com/api/v1/courses/1930464/users/5271535/assignments?per_page=100
-2025-03-31 18:29:59,930 - ERROR - Failed to fetch data for student 5250389: 404 Client Error: Not Found for url: https://usflearn.instructure.com/api/v1/courses/1930464/users/5250389/assignments?per_page=100
-2025-03-31 18:29:59,947 - ERROR - Failed to fetch data for student 5261815: 404 Client Error: Not Found for url: https://usflearn.instructure.com/api/v1/courses/1930464/users/5261815/assignments?per_page=100
-2025-03-31 18:29:59,953 - ERROR - Failed to fetch data for student 5275915: 404 Client Error: Not Found for url: https://usflearn.instructure.com/api/v1/courses/1930464/users/5275915/assignments?per_page=100
-2025-03-31 18:29:59,953 - ERROR - Failed to fetch data for student 5031459: 404 Client Error: Not Found for url: https://usflearn.instructure.com/api/v1/courses/1930464/users/5031459/assignments?per_page=100
-2025-03-31 18:29:59,970 - ERROR - Failed to fetch data for student 4444349: 404 Client Error: Not Found for url: https://usflearn.instructure.com/api/v1/courses/1930464/users/4444349/assignments?per_page=100
-2025-03-31 18:30:02,109 - ERROR - Failed to fetch data for student 5268535: 404 Client Error: Not Found for url: https://usflearn.instructure.com/api/v1/courses/1930464/users/5268535/assignments?per_page=100
-2025-03-31 18:30:02,189 - ERROR - Failed to fetch data for student 5094883: 404 Client Error: Not Found for url: https://usflearn.instructure.com/api/v1/courses/1930464/users/5094883/assignments?per_page=100
-2025-03-31 18:30:02,194 - ERROR - Failed to fetch data for student 5476127: 404 Client Error: Not Found for url: https://usflearn.instructure.com/api/v1/courses/1930464/users/5476127/assignments?per_page=100
-2025-03-31 18:30:02,218 - ERROR - Failed to fetch data for student 4901069: 404 Client Error: Not Found for url: https://usflearn.instructure.com/api/v1/courses/1930464/users/4901069/assignments?per_page=100
-2025-03-31 18:30:02,226 - ERROR - Failed to fetch data for student 5027871: 404 Client Error: Not Found for url: https://usflearn.instructure.com/api/v1/courses/1930464/users/5027871/assignments?per_page=100
-2025-03-31 18:30:02,266 - ERROR - Failed to fetch data for student 5286403: 404 Client Error: Not Found for url: https://usflearn.instructure.com/api/v1/courses/1930464/users/5286403/assignments?per_page=100
-2025-03-31 18:30:02,285 - ERROR - Failed to fetch data for student 5265017: 404 Client Error: Not Found for url: https://usflearn.instructure.com/api/v1/courses/1930464/users/5265017/assignments?per_page=100
-2025-03-31 18:30:02,292 - ERROR - Failed to fetch data for student 5280157: 404 Client Error: Not Found for url: https://usflearn.instructure.com/api/v1/courses/1930464/users/5280157/assignments?per_page=100
-2025-03-31 18:30:02,296 - ERROR - Failed to fetch data for student 5324141: 404 Client Error: Not Found for url: https://usflearn.instructure.com/api/v1/courses/1930464/users/5324141/assignments?per_page=100
-2025-03-31 18:30:02,327 - ERROR - Failed to fetch data for student 5279135: 404 Client Error: Not Found for url: https://usflearn.instructure.com/api/v1/courses/1930464/users/5279135/assignments?per_page=100
-2025-03-31 18:30:02,336 - INFO - Raw assignment data saved to C:\Users\mohan\Downloads\CRAFT-master 3\CRAFT-master\data_exports\assignments_raw.json
-2025-03-31 18:30:02,788 - INFO - Cleaned assignment data saved to C:\Users\mohan\Downloads\CRAFT-master 3\CRAFT-master\data_exports\assignments_cleaned.xlsx
-2025-03-31 18:30:59,963 - INFO - Reading student IDs from StudentRoster.csv...
-2025-03-31 18:30:59,967 - INFO - Fetching assignments for 682 students...
-2025-03-31 18:39:32,544 - INFO - Raw assignment data saved to C:\Users\mohan\Downloads\CRAFT-master 3\CRAFT-master\data_exports\assignments_raw.json
-2025-03-31 18:39:42,144 - INFO - Cleaned assignment data saved to C:\Users\mohan\Downloads\CRAFT-master 3\CRAFT-master\data_exports\assignments_cleaned.xlsx
-2025-03-31 18:54:15,776 - INFO - Reading student IDs from StudentRoster.csv...
-2025-03-31 18:54:15,779 - INFO - Fetching assignments for 682 students...
-2025-03-31 19:02:28,907 - INFO - Raw assignment data saved to C:\Users\mohan\Downloads\CRAFT-master 3\CRAFT-master\data_exports\assignments_raw.json
-2025-03-31 19:02:33,661 - INFO - Cleaned assignment data saved to C:\Users\mohan\Downloads\CRAFT-master 3\CRAFT-master\data_exports\assignments_cleaned.xlsx
-2025-03-31 20:30:29,967 - INFO - Reading student IDs from StudentRoster.csv...
-2025-03-31 20:30:29,969 - INFO - Fetching assignments for 682 students...
-2025-03-31 20:38:18,403 - INFO - Raw assignment data saved to C:\Users\mohan\Downloads\CRAFT-master 3\CRAFT-master\data_exports\assignments_raw.json
-2025-03-31 20:38:23,326 - INFO - Cleaned assignment data saved to C:\Users\mohan\Downloads\CRAFT-master 3\CRAFT-master\data_exports\assignments_cleaned.xlsx
-2025-03-31 20:45:04,755 - INFO - Reading student IDs from StudentRoster.csv...
-2025-03-31 20:45:04,755 - INFO - Fetching assignments for 682 students...
-2025-03-31 20:52:49,209 - INFO - Raw assignment data saved to C:\Users\mohan\Downloads\CRAFT-master 3\CRAFT-master\data_exports\assignments_raw.json
-2025-03-31 20:52:53,894 - INFO - Cleaned assignment data saved to C:\Users\mohan\Downloads\CRAFT-master 3\CRAFT-master\data_exports\assignments_cleaned.xlsx
-2025-03-31 20:55:02,524 - INFO - Reading student IDs from StudentRoster.csv...
-2025-03-31 20:55:02,525 - INFO - Fetching assignments for 682 students...
-2025-03-31 21:02:41,593 - INFO - Raw assignment data saved to C:\Users\mohan\Downloads\CRAFT-master 3\CRAFT-master\data_exports\assignments_raw.json
-2025-03-31 21:02:46,089 - INFO - Cleaned assignment data saved to C:\Users\mohan\Downloads\CRAFT-master 3\CRAFT-master\data_exports\assignments_cleaned.xlsx
-2025-03-31 21:04:13,591 - INFO - Reading student IDs from StudentRoster.csv...
-2025-03-31 21:04:13,593 - INFO - Fetching assignments for 682 students...
-2025-03-31 21:11:49,568 - INFO - Raw assignment data saved to C:\Users\mohan\Downloads\CRAFT-master 3\CRAFT-master\data_exports\assignments_raw.json
-2025-03-31 21:11:54,243 - INFO - Cleaned assignment data saved to C:\Users\mohan\Downloads\CRAFT-master 3\CRAFT-master\data_exports\assignments_cleaned.xlsx
-2025-03-31 21:16:12,699 - INFO - Reading student IDs from StudentRoster.csv...
-2025-03-31 21:16:12,701 - INFO - Fetching assignments for 682 students...
-2025-03-31 21:23:52,774 - INFO - Raw assignment data saved to C:\Users\mohan\Downloads\CRAFT-master 3\CRAFT-master\data_exports\assignments_raw.json
-2025-03-31 21:23:57,603 - INFO - Cleaned assignment data saved to C:\Users\mohan\Downloads\CRAFT-master 3\CRAFT-master\data_exports\assignments_cleaned.xlsx
-2025-03-31 21:30:16,263 - INFO - Reading student IDs from StudentRoster.csv...
-2025-03-31 21:30:16,266 - INFO - Fetching assignments for 682 students...
-2025-03-31 21:37:59,063 - INFO - Raw assignment data saved to C:\Users\mohan\Downloads\CRAFT-master 3\CRAFT-master\data_exports\assignments_raw.json
-2025-03-31 21:38:03,884 - INFO - Cleaned assignment data saved to C:\Users\mohan\Downloads\CRAFT-master 3\CRAFT-master\data_exports\assignments_cleaned.xlsx
-2025-03-31 23:47:08,710 - INFO - Reading student IDs from StudentRoster.csv...
-2025-03-31 23:47:08,710 - INFO - Fetching assignments for 682 students...
-2025-03-31 23:54:47,435 - INFO - Raw assignment data saved to C:\Users\mohan\Downloads\CRAFT-master 3\CRAFT-master\data_exports\assignments_raw.json
-2025-03-31 23:54:52,013 - INFO - Cleaned assignment data saved to C:\Users\mohan\Downloads\CRAFT-master 3\CRAFT-master\data_exports\assignments_cleaned.xlsx
-2025-04-03 10:29:31,969 - INFO - Reading student IDs from StudentRoster.csv...
-2025-04-03 10:29:31,971 - INFO - Fetching assignments for 682 students...
-2025-04-03 10:37:06,963 - INFO - Raw assignment data saved to C:\Users\mohan\Downloads\CRAFT-master 3\CRAFT-master\data_exports\assignments_raw.json
-2025-04-03 10:37:11,894 - INFO - Cleaned assignment data saved to C:\Users\mohan\Downloads\CRAFT-master 3\CRAFT-master\data_exports\assignments_cleaned.xlsx
+2025-05-25 10:57:10,348 - INFO - Reading student IDs from StudentRoster.csv...
+2025-05-25 10:57:10,349 - INFO - Fetching assignments for 66 students...
+2025-05-25 10:57:11,529 - ERROR - Failed to fetch data for student 5264631: 401 Client Error: Unauthorized for url: https://usflearn.instructure.com/api/v1/courses/1930464/analytics/users/5264631/assignments?per_page=100
+2025-05-25 10:57:11,536 - ERROR - Failed to fetch data for student 5159167: 401 Client Error: Unauthorized for url: https://usflearn.instructure.com/api/v1/courses/1930464/analytics/users/5159167/assignments?per_page=100
+2025-05-25 10:57:11,540 - ERROR - Failed to fetch data for student 5321711: 401 Client Error: Unauthorized for url: https://usflearn.instructure.com/api/v1/courses/1930464/analytics/users/5321711/assignments?per_page=100
+2025-05-25 10:57:11,552 - ERROR - Failed to fetch data for student 5333367: 401 Client Error: Unauthorized for url: https://usflearn.instructure.com/api/v1/courses/1930464/analytics/users/5333367/assignments?per_page=100
+2025-05-25 10:57:11,560 - ERROR - Failed to fetch data for student 5018111: 401 Client Error: Unauthorized for url: https://usflearn.instructure.com/api/v1/courses/1930464/analytics/users/5018111/assignments?per_page=100
+2025-05-25 10:57:11,571 - ERROR - Failed to fetch data for student 5341297: 401 Client Error: Unauthorized for url: https://usflearn.instructure.com/api/v1/courses/1930464/analytics/users/5341297/assignments?per_page=100
+2025-05-25 10:57:11,580 - ERROR - Failed to fetch data for student 5237007: 401 Client Error: Unauthorized for url: https://usflearn.instructure.com/api/v1/courses/1930464/analytics/users/5237007/assignments?per_page=100
+2025-05-25 10:57:11,611 - ERROR - Failed to fetch data for student 5324167: 401 Client Error: Unauthorized for url: https://usflearn.instructure.com/api/v1/courses/1930464/analytics/users/5324167/assignments?per_page=100
+2025-05-25 10:57:11,628 - ERROR - Failed to fetch data for student 4845467: 401 Client Error: Unauthorized for url: https://usflearn.instructure.com/api/v1/courses/1930464/analytics/users/4845467/assignments?per_page=100
+2025-05-25 10:57:11,638 - ERROR - Failed to fetch data for student 5343251: 401 Client Error: Unauthorized for url: https://usflearn.instructure.com/api/v1/courses/1930464/analytics/users/5343251/assignments?per_page=100
+2025-05-25 10:57:12,410 - ERROR - Failed to fetch data for student 5277805: 401 Client Error: Unauthorized for url: https://usflearn.instructure.com/api/v1/courses/1930464/analytics/users/5277805/assignments?per_page=100
+2025-05-25 10:57:12,444 - ERROR - Failed to fetch data for student 5260413: 401 Client Error: Unauthorized for url: https://usflearn.instructure.com/api/v1/courses/1930464/analytics/users/5260413/assignments?per_page=100
+2025-05-25 10:57:12,444 - ERROR - Failed to fetch data for student 5211091: 401 Client Error: Unauthorized for url: https://usflearn.instructure.com/api/v1/courses/1930464/analytics/users/5211091/assignments?per_page=100
+2025-05-25 10:57:12,455 - ERROR - Failed to fetch data for student 5244275: 401 Client Error: Unauthorized for url: https://usflearn.instructure.com/api/v1/courses/1930464/analytics/users/5244275/assignments?per_page=100
+2025-05-25 10:57:12,480 - ERROR - Failed to fetch data for student 5258093: 401 Client Error: Unauthorized for url: https://usflearn.instructure.com/api/v1/courses/1930464/analytics/users/5258093/assignments?per_page=100
+2025-05-25 10:57:12,482 - ERROR - Failed to fetch data for student 5341511: 401 Client Error: Unauthorized for url: https://usflearn.instructure.com/api/v1/courses/1930464/analytics/users/5341511/assignments?per_page=100
+2025-05-25 10:57:12,497 - ERROR - Failed to fetch data for student 4803449: 401 Client Error: Unauthorized for url: https://usflearn.instructure.com/api/v1/courses/1930464/analytics/users/4803449/assignments?per_page=100
+2025-05-25 10:57:12,521 - ERROR - Failed to fetch data for student 5075195: 401 Client Error: Unauthorized for url: https://usflearn.instructure.com/api/v1/courses/1930464/analytics/users/5075195/assignments?per_page=100
+2025-05-25 10:57:12,536 - ERROR - Failed to fetch data for student 5303487: 401 Client Error: Unauthorized for url: https://usflearn.instructure.com/api/v1/courses/1930464/analytics/users/5303487/assignments?per_page=100
+2025-05-25 10:57:12,554 - ERROR - Failed to fetch data for student 5322963: 401 Client Error: Unauthorized for url: https://usflearn.instructure.com/api/v1/courses/1930464/analytics/users/5322963/assignments?per_page=100
+2025-05-25 10:57:13,221 - ERROR - Failed to fetch data for student 5252563: 401 Client Error: Unauthorized for url: https://usflearn.instructure.com/api/v1/courses/1930464/analytics/users/5252563/assignments?per_page=100
+2025-05-25 10:57:13,316 - ERROR - Failed to fetch data for student 5269555: 401 Client Error: Unauthorized for url: https://usflearn.instructure.com/api/v1/courses/1930464/analytics/users/5269555/assignments?per_page=100
+2025-05-25 10:57:13,320 - ERROR - Failed to fetch data for student 5287447: 401 Client Error: Unauthorized for url: https://usflearn.instructure.com/api/v1/courses/1930464/analytics/users/5287447/assignments?per_page=100
+2025-05-25 10:57:13,323 - ERROR - Failed to fetch data for student 5263813: 401 Client Error: Unauthorized for url: https://usflearn.instructure.com/api/v1/courses/1930464/analytics/users/5263813/assignments?per_page=100
+2025-05-25 10:57:13,349 - ERROR - Failed to fetch data for student 5255659: 401 Client Error: Unauthorized for url: https://usflearn.instructure.com/api/v1/courses/1930464/analytics/users/5255659/assignments?per_page=100
+2025-05-25 10:57:13,368 - ERROR - Failed to fetch data for student 4596715: 401 Client Error: Unauthorized for url: https://usflearn.instructure.com/api/v1/courses/1930464/analytics/users/4596715/assignments?per_page=100
+2025-05-25 10:57:13,393 - ERROR - Failed to fetch data for student 5029701: 401 Client Error: Unauthorized for url: https://usflearn.instructure.com/api/v1/courses/1930464/analytics/users/5029701/assignments?per_page=100
+2025-05-25 10:57:13,401 - ERROR - Failed to fetch data for student 5285177: 401 Client Error: Unauthorized for url: https://usflearn.instructure.com/api/v1/courses/1930464/analytics/users/5285177/assignments?per_page=100
+2025-05-25 10:57:13,406 - ERROR - Failed to fetch data for student 5230621: 401 Client Error: Unauthorized for url: https://usflearn.instructure.com/api/v1/courses/1930464/analytics/users/5230621/assignments?per_page=100
+2025-05-25 10:57:13,407 - ERROR - Failed to fetch data for student 5033061: 401 Client Error: Unauthorized for url: https://usflearn.instructure.com/api/v1/courses/1930464/analytics/users/5033061/assignments?per_page=100
+2025-05-25 10:57:13,982 - ERROR - Failed to fetch data for student 5385177: 401 Client Error: Unauthorized for url: https://usflearn.instructure.com/api/v1/courses/1930464/analytics/users/5385177/assignments?per_page=100
+2025-05-25 10:57:14,192 - ERROR - Failed to fetch data for student 5266969: 401 Client Error: Unauthorized for url: https://usflearn.instructure.com/api/v1/courses/1930464/analytics/users/5266969/assignments?per_page=100
+2025-05-25 10:57:14,202 - ERROR - Failed to fetch data for student 5264859: 401 Client Error: Unauthorized for url: https://usflearn.instructure.com/api/v1/courses/1930464/analytics/users/5264859/assignments?per_page=100
+2025-05-25 10:57:14,225 - ERROR - Failed to fetch data for student 5234779: 401 Client Error: Unauthorized for url: https://usflearn.instructure.com/api/v1/courses/1930464/analytics/users/5234779/assignments?per_page=100
+2025-05-25 10:57:14,239 - ERROR - Failed to fetch data for student 5242323: 401 Client Error: Unauthorized for url: https://usflearn.instructure.com/api/v1/courses/1930464/analytics/users/5242323/assignments?per_page=100
+2025-05-25 10:57:14,261 - ERROR - Failed to fetch data for student 5237497: 401 Client Error: Unauthorized for url: https://usflearn.instructure.com/api/v1/courses/1930464/analytics/users/5237497/assignments?per_page=100
+2025-05-25 10:57:14,265 - ERROR - Failed to fetch data for student 5368843: 401 Client Error: Unauthorized for url: https://usflearn.instructure.com/api/v1/courses/1930464/analytics/users/5368843/assignments?per_page=100
+2025-05-25 10:57:14,277 - ERROR - Failed to fetch data for student 5081859: 401 Client Error: Unauthorized for url: https://usflearn.instructure.com/api/v1/courses/1930464/analytics/users/5081859/assignments?per_page=100
+2025-05-25 10:57:14,293 - ERROR - Failed to fetch data for student 5299959: 401 Client Error: Unauthorized for url: https://usflearn.instructure.com/api/v1/courses/1930464/analytics/users/5299959/assignments?per_page=100
+2025-05-25 10:57:14,352 - ERROR - Failed to fetch data for student 5226673: 401 Client Error: Unauthorized for url: https://usflearn.instructure.com/api/v1/courses/1930464/analytics/users/5226673/assignments?per_page=100
+2025-05-25 10:57:14,716 - ERROR - Failed to fetch data for student 5046387: 401 Client Error: Unauthorized for url: https://usflearn.instructure.com/api/v1/courses/1930464/analytics/users/5046387/assignments?per_page=100
+2025-05-25 10:57:15,140 - ERROR - Failed to fetch data for student 5274461: 401 Client Error: Unauthorized for url: https://usflearn.instructure.com/api/v1/courses/1930464/analytics/users/5274461/assignments?per_page=100
+2025-05-25 10:57:15,183 - ERROR - Failed to fetch data for student 5259461: 401 Client Error: Unauthorized for url: https://usflearn.instructure.com/api/v1/courses/1930464/analytics/users/5259461/assignments?per_page=100
+2025-05-25 10:57:15,183 - ERROR - Failed to fetch data for student 5291005: 401 Client Error: Unauthorized for url: https://usflearn.instructure.com/api/v1/courses/1930464/analytics/users/5291005/assignments?per_page=100
+2025-05-25 10:57:15,208 - ERROR - Failed to fetch data for student 5052305: 401 Client Error: Unauthorized for url: https://usflearn.instructure.com/api/v1/courses/1930464/analytics/users/5052305/assignments?per_page=100
+2025-05-25 10:57:15,217 - ERROR - Failed to fetch data for student 5268281: 401 Client Error: Unauthorized for url: https://usflearn.instructure.com/api/v1/courses/1930464/analytics/users/5268281/assignments?per_page=100
+2025-05-25 10:57:15,217 - ERROR - Failed to fetch data for student 5266413: 401 Client Error: Unauthorized for url: https://usflearn.instructure.com/api/v1/courses/1930464/analytics/users/5266413/assignments?per_page=100
+2025-05-25 10:57:15,228 - ERROR - Failed to fetch data for student 5254955: 401 Client Error: Unauthorized for url: https://usflearn.instructure.com/api/v1/courses/1930464/analytics/users/5254955/assignments?per_page=100
+2025-05-25 10:57:15,228 - ERROR - Failed to fetch data for student 4995979: 401 Client Error: Unauthorized for url: https://usflearn.instructure.com/api/v1/courses/1930464/analytics/users/4995979/assignments?per_page=100
+2025-05-25 10:57:15,254 - ERROR - Failed to fetch data for student 5078245: 401 Client Error: Unauthorized for url: https://usflearn.instructure.com/api/v1/courses/1930464/analytics/users/5078245/assignments?per_page=100
+2025-05-25 10:57:15,425 - ERROR - Failed to fetch data for student 5249109: 401 Client Error: Unauthorized for url: https://usflearn.instructure.com/api/v1/courses/1930464/analytics/users/5249109/assignments?per_page=100
+2025-05-25 10:57:16,117 - ERROR - Failed to fetch data for student 5245161: 401 Client Error: Unauthorized for url: https://usflearn.instructure.com/api/v1/courses/1930464/analytics/users/5245161/assignments?per_page=100
+2025-05-25 10:57:16,185 - ERROR - Failed to fetch data for student 5418569: 401 Client Error: Unauthorized for url: https://usflearn.instructure.com/api/v1/courses/1930464/analytics/users/5418569/assignments?per_page=100
+2025-05-25 10:57:16,223 - ERROR - Failed to fetch data for student 5277021: 401 Client Error: Unauthorized for url: https://usflearn.instructure.com/api/v1/courses/1930464/analytics/users/5277021/assignments?per_page=100
+2025-05-25 10:57:16,226 - ERROR - Failed to fetch data for student 5243067: 401 Client Error: Unauthorized for url: https://usflearn.instructure.com/api/v1/courses/1930464/analytics/users/5243067/assignments?per_page=100
+2025-05-25 10:57:16,257 - ERROR - Failed to fetch data for student 5371709: 401 Client Error: Unauthorized for url: https://usflearn.instructure.com/api/v1/courses/1930464/analytics/users/5371709/assignments?per_page=100
+2025-05-25 10:57:16,261 - ERROR - Failed to fetch data for student 5314605: 401 Client Error: Unauthorized for url: https://usflearn.instructure.com/api/v1/courses/1930464/analytics/users/5314605/assignments?per_page=100
+2025-05-25 10:57:16,269 - ERROR - Failed to fetch data for student 5328305: 401 Client Error: Unauthorized for url: https://usflearn.instructure.com/api/v1/courses/1930464/analytics/users/5328305/assignments?per_page=100
+2025-05-25 10:57:16,281 - ERROR - Failed to fetch data for student 5341087: 401 Client Error: Unauthorized for url: https://usflearn.instructure.com/api/v1/courses/1930464/analytics/users/5341087/assignments?per_page=100
+2025-05-25 10:57:16,281 - ERROR - Failed to fetch data for student 5305513: 401 Client Error: Unauthorized for url: https://usflearn.instructure.com/api/v1/courses/1930464/analytics/users/5305513/assignments?per_page=100
+2025-05-25 10:57:16,340 - ERROR - Failed to fetch data for student 5285071: 401 Client Error: Unauthorized for url: https://usflearn.instructure.com/api/v1/courses/1930464/analytics/users/5285071/assignments?per_page=100
+2025-05-25 10:57:16,800 - ERROR - Failed to fetch data for student 5342207: 401 Client Error: Unauthorized for url: https://usflearn.instructure.com/api/v1/courses/1930464/analytics/users/5342207/assignments?per_page=100
+2025-05-25 10:57:16,876 - ERROR - Failed to fetch data for student 5400867: 401 Client Error: Unauthorized for url: https://usflearn.instructure.com/api/v1/courses/1930464/analytics/users/5400867/assignments?per_page=100
+2025-05-25 10:57:16,935 - ERROR - Failed to fetch data for student 5042553: 401 Client Error: Unauthorized for url: https://usflearn.instructure.com/api/v1/courses/1930464/analytics/users/5042553/assignments?per_page=100
+2025-05-25 10:57:16,935 - ERROR - Failed to fetch data for student 5371577: 401 Client Error: Unauthorized for url: https://usflearn.instructure.com/api/v1/courses/1930464/analytics/users/5371577/assignments?per_page=100
+2025-05-25 10:57:16,954 - ERROR - Failed to fetch data for student 5332285: 401 Client Error: Unauthorized for url: https://usflearn.instructure.com/api/v1/courses/1930464/analytics/users/5332285/assignments?per_page=100
+2025-05-25 10:57:16,960 - INFO - Raw assignment data saved to C:\Users\mohan\Downloads\CRAFT-master 3\CRAFT-master\data_exports\assignments_raw.json
+2025-05-25 10:57:16,979 - INFO - Cleaned assignment data saved to C:\Users\mohan\Downloads\CRAFT-master 3\CRAFT-master\data_exports\assignments_cleaned.xlsx
+2025-05-25 10:58:12,126 - INFO - Reading student IDs from StudentRoster.csv...
+2025-05-25 10:58:12,126 - INFO - Fetching assignments for 66 students...
+2025-05-25 10:58:13,127 - ERROR - Failed to fetch data for student 5018111: 401 Client Error: Unauthorized for url: https://usflearn.instructure.com/api/v1/courses/1962040/analytics/users/5018111/assignments?per_page=100
+2025-05-25 10:58:13,127 - ERROR - Failed to fetch data for student 5264631: 401 Client Error: Unauthorized for url: https://usflearn.instructure.com/api/v1/courses/1962040/analytics/users/5264631/assignments?per_page=100
+2025-05-25 10:58:13,127 - ERROR - Failed to fetch data for student 5333367: 401 Client Error: Unauthorized for url: https://usflearn.instructure.com/api/v1/courses/1962040/analytics/users/5333367/assignments?per_page=100
+2025-05-25 10:58:13,127 - ERROR - Failed to fetch data for student 5343251: 401 Client Error: Unauthorized for url: https://usflearn.instructure.com/api/v1/courses/1962040/analytics/users/5343251/assignments?per_page=100
+2025-05-25 10:58:13,127 - ERROR - Failed to fetch data for student 5324167: 401 Client Error: Unauthorized for url: https://usflearn.instructure.com/api/v1/courses/1962040/analytics/users/5324167/assignments?per_page=100
+2025-05-25 10:58:13,127 - ERROR - Failed to fetch data for student 5321711: 401 Client Error: Unauthorized for url: https://usflearn.instructure.com/api/v1/courses/1962040/analytics/users/5321711/assignments?per_page=100
+2025-05-25 10:58:13,132 - ERROR - Failed to fetch data for student 5159167: 401 Client Error: Unauthorized for url: https://usflearn.instructure.com/api/v1/courses/1962040/analytics/users/5159167/assignments?per_page=100
+2025-05-25 10:58:13,132 - ERROR - Failed to fetch data for student 5341297: 401 Client Error: Unauthorized for url: https://usflearn.instructure.com/api/v1/courses/1962040/analytics/users/5341297/assignments?per_page=100
+2025-05-25 10:58:13,132 - ERROR - Failed to fetch data for student 5237007: 401 Client Error: Unauthorized for url: https://usflearn.instructure.com/api/v1/courses/1962040/analytics/users/5237007/assignments?per_page=100
+2025-05-25 10:58:13,134 - ERROR - Failed to fetch data for student 4845467: 401 Client Error: Unauthorized for url: https://usflearn.instructure.com/api/v1/courses/1962040/analytics/users/4845467/assignments?per_page=100
+2025-05-25 10:58:14,004 - ERROR - Failed to fetch data for student 5277805: 401 Client Error: Unauthorized for url: https://usflearn.instructure.com/api/v1/courses/1962040/analytics/users/5277805/assignments?per_page=100
+2025-05-25 10:58:14,004 - ERROR - Failed to fetch data for student 5244275: 401 Client Error: Unauthorized for url: https://usflearn.instructure.com/api/v1/courses/1962040/analytics/users/5244275/assignments?per_page=100
+2025-05-25 10:58:14,012 - ERROR - Failed to fetch data for student 5211091: 401 Client Error: Unauthorized for url: https://usflearn.instructure.com/api/v1/courses/1962040/analytics/users/5211091/assignments?per_page=100
+2025-05-25 10:58:14,158 - ERROR - Failed to fetch data for student 5075195: 401 Client Error: Unauthorized for url: https://usflearn.instructure.com/api/v1/courses/1962040/analytics/users/5075195/assignments?per_page=100
+2025-05-25 10:58:14,158 - ERROR - Failed to fetch data for student 5303487: 401 Client Error: Unauthorized for url: https://usflearn.instructure.com/api/v1/courses/1962040/analytics/users/5303487/assignments?per_page=100
+2025-05-25 10:58:14,158 - ERROR - Failed to fetch data for student 5341511: 401 Client Error: Unauthorized for url: https://usflearn.instructure.com/api/v1/courses/1962040/analytics/users/5341511/assignments?per_page=100
+2025-05-25 10:58:14,158 - ERROR - Failed to fetch data for student 5322963: 401 Client Error: Unauthorized for url: https://usflearn.instructure.com/api/v1/courses/1962040/analytics/users/5322963/assignments?per_page=100
+2025-05-25 10:58:14,158 - ERROR - Failed to fetch data for student 4803449: 401 Client Error: Unauthorized for url: https://usflearn.instructure.com/api/v1/courses/1962040/analytics/users/4803449/assignments?per_page=100
+2025-05-25 10:58:14,160 - ERROR - Failed to fetch data for student 5258093: 401 Client Error: Unauthorized for url: https://usflearn.instructure.com/api/v1/courses/1962040/analytics/users/5258093/assignments?per_page=100
+2025-05-25 10:58:14,160 - ERROR - Failed to fetch data for student 5260413: 401 Client Error: Unauthorized for url: https://usflearn.instructure.com/api/v1/courses/1962040/analytics/users/5260413/assignments?per_page=100
+2025-05-25 10:58:14,925 - ERROR - Failed to fetch data for student 5252563: 401 Client Error: Unauthorized for url: https://usflearn.instructure.com/api/v1/courses/1962040/analytics/users/5252563/assignments?per_page=100
+2025-05-25 10:58:14,925 - ERROR - Failed to fetch data for student 5269555: 401 Client Error: Unauthorized for url: https://usflearn.instructure.com/api/v1/courses/1962040/analytics/users/5269555/assignments?per_page=100
+2025-05-25 10:58:14,930 - ERROR - Failed to fetch data for student 5287447: 401 Client Error: Unauthorized for url: https://usflearn.instructure.com/api/v1/courses/1962040/analytics/users/5287447/assignments?per_page=100
+2025-05-25 10:58:15,133 - ERROR - Failed to fetch data for student 5285177: 401 Client Error: Unauthorized for url: https://usflearn.instructure.com/api/v1/courses/1962040/analytics/users/5285177/assignments?per_page=100
+2025-05-25 10:58:15,135 - ERROR - Failed to fetch data for student 5263813: 401 Client Error: Unauthorized for url: https://usflearn.instructure.com/api/v1/courses/1962040/analytics/users/5263813/assignments?per_page=100
+2025-05-25 10:58:15,135 - ERROR - Failed to fetch data for student 4596715: 401 Client Error: Unauthorized for url: https://usflearn.instructure.com/api/v1/courses/1962040/analytics/users/4596715/assignments?per_page=100
+2025-05-25 10:58:15,138 - ERROR - Failed to fetch data for student 5029701: 401 Client Error: Unauthorized for url: https://usflearn.instructure.com/api/v1/courses/1962040/analytics/users/5029701/assignments?per_page=100
+2025-05-25 10:58:15,138 - ERROR - Failed to fetch data for student 5255659: 401 Client Error: Unauthorized for url: https://usflearn.instructure.com/api/v1/courses/1962040/analytics/users/5255659/assignments?per_page=100
+2025-05-25 10:58:15,210 - ERROR - Failed to fetch data for student 5230621: 401 Client Error: Unauthorized for url: https://usflearn.instructure.com/api/v1/courses/1962040/analytics/users/5230621/assignments?per_page=100
+2025-05-25 10:58:15,210 - ERROR - Failed to fetch data for student 5033061: 401 Client Error: Unauthorized for url: https://usflearn.instructure.com/api/v1/courses/1962040/analytics/users/5033061/assignments?per_page=100
+2025-05-25 10:58:15,684 - ERROR - Failed to fetch data for student 5385177: 401 Client Error: Unauthorized for url: https://usflearn.instructure.com/api/v1/courses/1962040/analytics/users/5385177/assignments?per_page=100
+2025-05-25 10:58:15,819 - ERROR - Failed to fetch data for student 5266969: 401 Client Error: Unauthorized for url: https://usflearn.instructure.com/api/v1/courses/1962040/analytics/users/5266969/assignments?per_page=100
+2025-05-25 10:58:15,819 - ERROR - Failed to fetch data for student 5242323: 401 Client Error: Unauthorized for url: https://usflearn.instructure.com/api/v1/courses/1962040/analytics/users/5242323/assignments?per_page=100
+2025-05-25 10:58:16,068 - ERROR - Failed to fetch data for student 5226673: 401 Client Error: Unauthorized for url: https://usflearn.instructure.com/api/v1/courses/1962040/analytics/users/5226673/assignments?per_page=100
+2025-05-25 10:58:16,076 - ERROR - Failed to fetch data for student 5237497: 401 Client Error: Unauthorized for url: https://usflearn.instructure.com/api/v1/courses/1962040/analytics/users/5237497/assignments?per_page=100
+2025-05-25 10:58:16,076 - ERROR - Failed to fetch data for student 5368843: 401 Client Error: Unauthorized for url: https://usflearn.instructure.com/api/v1/courses/1962040/analytics/users/5368843/assignments?per_page=100
+2025-05-25 10:58:16,076 - ERROR - Failed to fetch data for student 5234779: 401 Client Error: Unauthorized for url: https://usflearn.instructure.com/api/v1/courses/1962040/analytics/users/5234779/assignments?per_page=100
+2025-05-25 10:58:16,084 - ERROR - Failed to fetch data for student 5264859: 401 Client Error: Unauthorized for url: https://usflearn.instructure.com/api/v1/courses/1962040/analytics/users/5264859/assignments?per_page=100
+2025-05-25 10:58:16,113 - ERROR - Failed to fetch data for student 5081859: 401 Client Error: Unauthorized for url: https://usflearn.instructure.com/api/v1/courses/1962040/analytics/users/5081859/assignments?per_page=100
+2025-05-25 10:58:16,117 - ERROR - Failed to fetch data for student 5299959: 401 Client Error: Unauthorized for url: https://usflearn.instructure.com/api/v1/courses/1962040/analytics/users/5299959/assignments?per_page=100
+2025-05-25 10:58:16,407 - ERROR - Failed to fetch data for student 5046387: 401 Client Error: Unauthorized for url: https://usflearn.instructure.com/api/v1/courses/1962040/analytics/users/5046387/assignments?per_page=100
+2025-05-25 10:58:16,702 - ERROR - Failed to fetch data for student 5274461: 401 Client Error: Unauthorized for url: https://usflearn.instructure.com/api/v1/courses/1962040/analytics/users/5274461/assignments?per_page=100
+2025-05-25 10:58:16,707 - ERROR - Failed to fetch data for student 5259461: 401 Client Error: Unauthorized for url: https://usflearn.instructure.com/api/v1/courses/1962040/analytics/users/5259461/assignments?per_page=100
+2025-05-25 10:58:17,135 - ERROR - Failed to fetch data for student 5291005: 401 Client Error: Unauthorized for url: https://usflearn.instructure.com/api/v1/courses/1962040/analytics/users/5291005/assignments?per_page=100
+2025-05-25 10:58:17,142 - ERROR - Failed to fetch data for student 5052305: 401 Client Error: Unauthorized for url: https://usflearn.instructure.com/api/v1/courses/1962040/analytics/users/5052305/assignments?per_page=100
+2025-05-25 10:58:17,151 - ERROR - Failed to fetch data for student 5268281: 401 Client Error: Unauthorized for url: https://usflearn.instructure.com/api/v1/courses/1962040/analytics/users/5268281/assignments?per_page=100
+2025-05-25 10:58:17,156 - ERROR - Failed to fetch data for student 5266413: 401 Client Error: Unauthorized for url: https://usflearn.instructure.com/api/v1/courses/1962040/analytics/users/5266413/assignments?per_page=100
+2025-05-25 10:58:17,166 - ERROR - Failed to fetch data for student 5254955: 401 Client Error: Unauthorized for url: https://usflearn.instructure.com/api/v1/courses/1962040/analytics/users/5254955/assignments?per_page=100
+2025-05-25 10:58:17,183 - ERROR - Failed to fetch data for student 4995979: 401 Client Error: Unauthorized for url: https://usflearn.instructure.com/api/v1/courses/1962040/analytics/users/4995979/assignments?per_page=100
+2025-05-25 10:58:17,183 - ERROR - Failed to fetch data for student 5078245: 401 Client Error: Unauthorized for url: https://usflearn.instructure.com/api/v1/courses/1962040/analytics/users/5078245/assignments?per_page=100
+2025-05-25 10:58:17,331 - ERROR - Failed to fetch data for student 5249109: 401 Client Error: Unauthorized for url: https://usflearn.instructure.com/api/v1/courses/1962040/analytics/users/5249109/assignments?per_page=100
+2025-05-25 10:58:17,656 - ERROR - Failed to fetch data for student 5277021: 401 Client Error: Unauthorized for url: https://usflearn.instructure.com/api/v1/courses/1962040/analytics/users/5277021/assignments?per_page=100
+2025-05-25 10:58:17,660 - ERROR - Failed to fetch data for student 5245161: 401 Client Error: Unauthorized for url: https://usflearn.instructure.com/api/v1/courses/1962040/analytics/users/5245161/assignments?per_page=100
+2025-05-25 10:58:18,110 - ERROR - Failed to fetch data for student 5418569: 401 Client Error: Unauthorized for url: https://usflearn.instructure.com/api/v1/courses/1962040/analytics/users/5418569/assignments?per_page=100
+2025-05-25 10:58:18,113 - ERROR - Failed to fetch data for student 5243067: 401 Client Error: Unauthorized for url: https://usflearn.instructure.com/api/v1/courses/1962040/analytics/users/5243067/assignments?per_page=100
+2025-05-25 10:58:18,118 - ERROR - Failed to fetch data for student 5371709: 401 Client Error: Unauthorized for url: https://usflearn.instructure.com/api/v1/courses/1962040/analytics/users/5371709/assignments?per_page=100
+2025-05-25 10:58:18,126 - ERROR - Failed to fetch data for student 5314605: 401 Client Error: Unauthorized for url: https://usflearn.instructure.com/api/v1/courses/1962040/analytics/users/5314605/assignments?per_page=100
+2025-05-25 10:58:18,179 - ERROR - Failed to fetch data for student 5328305: 401 Client Error: Unauthorized for url: https://usflearn.instructure.com/api/v1/courses/1962040/analytics/users/5328305/assignments?per_page=100
+2025-05-25 10:58:18,185 - ERROR - Failed to fetch data for student 5341087: 401 Client Error: Unauthorized for url: https://usflearn.instructure.com/api/v1/courses/1962040/analytics/users/5341087/assignments?per_page=100
+2025-05-25 10:58:18,188 - ERROR - Failed to fetch data for student 5305513: 401 Client Error: Unauthorized for url: https://usflearn.instructure.com/api/v1/courses/1962040/analytics/users/5305513/assignments?per_page=100
+2025-05-25 10:58:18,216 - ERROR - Failed to fetch data for student 5285071: 401 Client Error: Unauthorized for url: https://usflearn.instructure.com/api/v1/courses/1962040/analytics/users/5285071/assignments?per_page=100
+2025-05-25 10:58:18,429 - ERROR - Failed to fetch data for student 5342207: 401 Client Error: Unauthorized for url: https://usflearn.instructure.com/api/v1/courses/1962040/analytics/users/5342207/assignments?per_page=100
+2025-05-25 10:58:18,429 - ERROR - Failed to fetch data for student 5400867: 401 Client Error: Unauthorized for url: https://usflearn.instructure.com/api/v1/courses/1962040/analytics/users/5400867/assignments?per_page=100
+2025-05-25 10:58:18,745 - ERROR - Failed to fetch data for student 5371577: 401 Client Error: Unauthorized for url: https://usflearn.instructure.com/api/v1/courses/1962040/analytics/users/5371577/assignments?per_page=100
+2025-05-25 10:58:18,746 - ERROR - Failed to fetch data for student 5042553: 401 Client Error: Unauthorized for url: https://usflearn.instructure.com/api/v1/courses/1962040/analytics/users/5042553/assignments?per_page=100
+2025-05-25 10:58:18,751 - ERROR - Failed to fetch data for student 5332285: 401 Client Error: Unauthorized for url: https://usflearn.instructure.com/api/v1/courses/1962040/analytics/users/5332285/assignments?per_page=100
+2025-05-25 10:58:18,757 - INFO - Raw assignment data saved to C:\Users\mohan\Downloads\CRAFT-master 3\CRAFT-master\data_exports\assignments_raw.json
+2025-05-25 10:58:18,768 - INFO - Cleaned assignment data saved to C:\Users\mohan\Downloads\CRAFT-master 3\CRAFT-master\data_exports\assignments_cleaned.xlsx
+2025-05-25 11:00:17,673 - INFO - Reading student IDs from StudentRoster.csv...
+2025-05-25 11:00:17,673 - INFO - Fetching assignments for 66 students...
+2025-05-25 11:00:28,544 - INFO - Raw assignment data saved to C:\Users\mohan\Downloads\CRAFT-master 3\CRAFT-master\data_exports\assignments_raw.json
+2025-05-25 11:00:28,916 - INFO - Cleaned assignment data saved to C:\Users\mohan\Downloads\CRAFT-master 3\CRAFT-master\data_exports\assignments_cleaned.xlsx
+2025-05-25 11:05:11,576 - INFO - Reading student IDs from StudentRoster.csv...
+2025-05-25 11:05:11,579 - INFO - Fetching assignments for 66 students...
+2025-05-25 11:05:18,695 - INFO - Raw assignment data saved to C:\Users\mohan\Downloads\CRAFT-master 3\CRAFT-master\data_exports\assignments_raw.json
+2025-05-25 11:05:18,998 - INFO - Cleaned assignment data saved to C:\Users\mohan\Downloads\CRAFT-master 3\CRAFT-master\data_exports\assignments_cleaned.xlsx
+2025-06-23 11:48:05,221 - INFO - Reading student IDs from StudentRoster.csv...
+2025-06-23 11:48:05,221 - INFO - Fetching assignments for 66 students...
+2025-06-23 11:48:10,500 - ERROR - Failed to fetch data for student 5299959: 404 Client Error: Not Found for url: https://usflearn.instructure.com/api/v1/courses/1962040/analytics/users/5299959/assignments?per_page=100
+2025-06-23 11:48:13,170 - ERROR - Failed to fetch data for student 5341087: 404 Client Error: Not Found for url: https://usflearn.instructure.com/api/v1/courses/1962040/analytics/users/5341087/assignments?per_page=100
+2025-06-23 11:48:14,645 - INFO - Raw assignment data saved to C:\Users\mohan\Downloads\CRAFT-master 3\CRAFT-master\data_exports\assignments_raw.json
+2025-06-23 11:48:14,959 - INFO - Cleaned assignment data saved to C:\Users\mohan\Downloads\CRAFT-master 3\CRAFT-master\data_exports\assignments_cleaned.xlsx
+2025-06-23 11:54:17,399 - INFO - Reading student IDs from StudentRoster.csv...
+2025-06-23 11:54:17,400 - INFO - Fetching assignments for 64 students...
+2025-06-23 11:54:24,211 - INFO - Raw assignment data saved to C:\Users\mohan\Downloads\CRAFT-master 3\CRAFT-master\data_exports\assignments_raw.json
+2025-06-23 11:54:24,511 - INFO - Cleaned assignment data saved to C:\Users\mohan\Downloads\CRAFT-master 3\CRAFT-master\data_exports\assignments_cleaned.xlsx

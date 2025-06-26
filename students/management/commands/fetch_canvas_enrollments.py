@@ -24,8 +24,8 @@ class Command(BaseCommand):
         raw_file = os.path.join(output_dir, 'enrollments_raw.xlsx')
         cleaned_file = os.path.join(output_dir, 'cleaned_enrollments_data.xlsx')
 
-        api_url = "https://usflearn.instructure.com/api/v1/courses/1930464/enrollments"
-        bearer_token = "13~WE6aXzRMrPTheVDUVn6cfQtV2VP7EtvDvfPJkt9fDEH9h9MY8JAJQQtB7a786mWu"
+        api_url = "https://usflearn.instructure.com/api/v1/courses/1962040/enrollments"
+        bearer_token = "13~L8mFHryGEXXC8n4u2aktPrkmwPuzmWMazM7nQ2PyTULKVNcK82x2yMH6vw2AGK9f"
         headers = {"Authorization": f"Bearer {bearer_token}"}
 
         # === Logging Setup ===
