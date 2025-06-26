@@ -1,9 +1,12 @@
 # students/urls.py
 
-from django.urls import path
+from django.urls import path,include
 from . import views
 
 urlpatterns = [
+    # in urls.py
+path('login/', auth_views.LoginView.as_view(), name='login')
+,  # Ensure you have the correct import for auth_views
     path('', views.home, name='home'),
     path('last_login/', views.last_login, name='last_login'),
     path('select_assignments/', views.assignments_page, name='select_assignments'),

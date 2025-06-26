@@ -1,55 +1,40 @@
 id,title,due_date
-17291835,First Day Attendance Survey,2025-01-16T20:00:00Z
-17291461,Check Your Understanding SAM Word Getting Started Project,2025-02-07T04:59:00Z
-17291463,Check Your Understanding SAM Excel Getting Started Project,2025-02-07T04:59:00Z
-17291465,Check Your Understanding SAM PowerPoint Getting Started Project,2025-02-07T04:59:00Z
-17291721,SAM Training Teams Module 01 Introduction to Microsoft Teams,2025-02-07T04:59:00Z
-17291723,SAM Training Teams Module 02 Making Meetings More Productive,2025-02-07T04:59:00Z
-17291725,SAM Training Teams Module 03 Building an Effective Teams Environment,2025-02-07T04:59:00Z
-17288611,Research Survey 1,2025-02-14T04:59:00Z
-17585593,BizCafe  Assignment: Case Quiz (Team),2025-02-14T04:59:00Z
-17585595,BizCafe  Assignment: Concepts Quiz (Team),2025-02-14T04:59:00Z
-17288603,Advertising Development (Flyer),2025-02-21T04:59:00Z
-17291467,Skills Training Module 01 Impact of Digital Technology,2025-02-21T04:59:00Z
-17291659,Skills Training Module 02 The Web,2025-02-21T04:59:00Z
-17291661,Skills Training Module 03 Hardware and Processors,2025-02-21T04:59:00Z
-17291663,Skills Training Module 06 Cybersecurity and Safety,2025-02-21T04:59:00Z
-17291665,Skills Training Module 10 Networking,2025-02-21T04:59:00Z
-17291667,Skills Training Module 11 Digital Communication,2025-02-21T04:59:00Z
-17291669,Skills Training Module 12 Digital Transformation,2025-02-21T04:59:00Z
-17291671,Skills Training Module 14 Digital Ethics and Lifestyle,2025-02-21T04:59:00Z
-17629191,BizCafe  Assignment: Staffing (Team),2025-02-21T04:59:00Z
-17629193,BizCafe  Assignment: Break-Even Analysis (Team),2025-02-21T04:59:00Z
-17638975,BizCafe  Assignment: Forecasting and Resource Planning (Team),2025-02-28T04:59:00Z
-17291727,SAM Training Word Module 01 Creating and Editing a Document,2025-03-10T03:59:00Z
-17291729,SAM Training Word Module 02 Navigating and Formatting a Document,2025-03-10T03:59:00Z
-17291731,SAM Training Word Module 03 Creating Tables and a Multipage Report,2025-03-10T03:59:00Z
-17291733,SAM Training Word Module 04 Enhancing Page Layout and Design,2025-03-10T03:59:00Z
-17291735,"SAM Training Word Module 05 Working with Templates, Themes, and Styles",2025-03-10T03:59:00Z
-17291801,SAM End of Module Project 1 Word Module 01 Creating and Editing a Document,2025-03-10T03:59:00Z
-17291803,SAM End of Module Project 1 Word Module 02 Navigating and Formatting a Document,2025-03-10T03:59:00Z
-17638977,BizCafe  Assignment: Pricing (Team),2025-03-14T03:59:00Z
-17288601,#GEA1-Biz Cafe Report,2025-03-28T03:59:00Z
-17288605,Biz Cafe Activity,2025-04-04T03:59:00Z
-17291745,SAM Training PowerPoint Module 01 Creating a Presentation,2025-04-04T03:59:00Z
-17291747,SAM Training PowerPoint Module 02 Adding Media and Special Effects,2025-04-04T03:59:00Z
-17291749,SAM Training PowerPoint Module 03 Applying Advanced Formatting to Objects,2025-04-04T03:59:00Z
-17291751,SAM Training PowerPoint Module 04 Advanced Animations and Distributing Presentations,2025-04-04T03:59:00Z
-17291813,SAM End of Module Project 1 PowerPoint Module 01 Creating a Presentation,2025-04-04T03:59:00Z
-17638979,BizCafe  Assignment: Income Statement Basics (Team),2025-04-04T03:59:00Z
-17638981,BizCafe  Assignment: Balance Sheet Basics (Team),2025-04-04T03:59:00Z
-17291737,SAM Training Excel Module 01 Getting Started with Excel,2025-04-11T03:59:00Z
-17291739,SAM Training Excel Module 02 Formatting a Workbook,2025-04-11T03:59:00Z
-17291741,SAM Training Excel Module 03 Calculating with Formulas and Functions,2025-04-11T03:59:00Z
-17291743,SAM Training Excel Module 04 Analyzing and Charting Financial Data,2025-04-11T03:59:00Z
-17291807,SAM End of Module Project 1 Excel Module 01 Getting Started with Excel,2025-04-11T03:59:00Z
-17291809,SAM End of Module Project 1 Excel Module 03 Calculating with Formulas and Functions,2025-04-11T03:59:00Z
-17291811,SAM End of Module Project 1 Excel Module 04 Analyzing and Charting Financial Data,2025-04-11T03:59:00Z
-17288619,Biz Cafe Team Presentation,2025-04-15T03:59:00Z
-17288607,Biz Cafe Excel Capstone,2025-04-18T03:59:00Z
-17288613,Research Survey 2,2025-04-25T03:59:00Z
-17564665,Level 1 Completion Verification; Spring 2025,2025-04-25T03:59:00Z
-17567783,Accessed MindTap,nan
-17578667,Biz Cafe Accessed,nan
-17585591,BizCafe Team Game,nan
-17682437,Midterm Letter Grade,nan
+17992789,First Day Attendance Survey,2025-05-22T16:00:00Z
+17996535,SAM Training Teams Module 01 Introduction to Microsoft Teams,2025-05-30T03:59:00Z
+17996537,SAM Training Teams Module 02 Making Meetings More Productive,2025-05-30T03:59:00Z
+17996539,SAM Training Teams Module 03 Building an Effective Teams Environment,2025-05-30T03:59:00Z
+17997571,Check Your Understanding SAM Word Getting Started Project,2025-05-30T03:59:00Z
+17997573,Check Your Understanding SAM Excel Getting Started Project,2025-05-30T03:59:00Z
+17997575,Check Your Understanding SAM PowerPoint Getting Started Project,2025-05-30T03:59:00Z
+17992793,Advertising Development (Flyer),2025-06-06T03:59:00Z
+17998755,BizCafe  Assignment: Case Quiz (Individual),2025-06-06T03:59:00Z
+17998761,BizCafe  Assignment: Concepts Quiz (Individual),2025-06-06T03:59:00Z
+17996541,SAM Training Word Module 01 Creating and Editing a Document,2025-06-13T03:59:00Z
+17996543,SAM End of Module Project 1 Word Module 01 Creating and Editing a Document,2025-06-13T03:59:00Z
+17996545,SAM Training Word Module 02 Navigating and Formatting a Document,2025-06-13T03:59:00Z
+17996547,SAM Training Word Module 03 Creating Tables and a Multipage Report,2025-06-13T03:59:00Z
+17996549,SAM Training Word Module 04 Enhancing Page Layout and Design,2025-06-13T03:59:00Z
+17996551,"SAM Training Word Module 05 Working with Templates, Themes, and Styles",2025-06-13T03:59:00Z
+17998759,BizCafe  Assignment: Break-Even Analysis (Individual),2025-06-13T03:59:00Z
+17998757,BizCafe  Assignment: Staffing (Individual),2025-06-13T03:59:00Z
+17998763,BizCafe  Assignment: Forecasting and Resource Planning (Individual),2025-06-23T03:59:00Z
+17992791,#GEA1-Biz Cafe Report,2025-06-23T03:59:00Z
+17996553,SAM Training Excel Module 01 Getting Started with Excel,2025-06-27T03:59:00Z
+17996557,SAM Training Excel Module 02 Formatting a Workbook,2025-06-27T03:59:00Z
+17996559,SAM Training Excel Module 03 Calculating with Formulas and Functions,2025-06-27T03:59:00Z
+17996561,SAM End of Module Project 1 Excel Module 03 Calculating with Formulas and Functions,2025-06-27T03:59:00Z
+17996563,SAM Training Excel Module 04 Analyzing and Charting Financial Data,2025-06-27T03:59:00Z
+17996575,SAM Training Outlook Module 01 Managing Email Messages with Outlook,2025-06-27T03:59:00Z
+17996577,SAM Training Outlook Module 02 Managing Calendars with Outlook,2025-06-27T03:59:00Z
+17996579,SAM Training Outlook Module 03 Managing Contacts and Personal Contact Information with Outlook,2025-06-27T03:59:00Z
+17998765,BizCafe  Assignment: Pricing (Individual),2025-06-27T03:59:00Z
+17998663,Level 1 - Fundamentals; Summer 2025,2025-06-27T03:59:00Z
+17992795,Biz Cafe Activity,2025-07-11T03:59:00Z
+17996565,SAM Training PowerPoint Module 01 Creating a Presentation,2025-07-11T03:59:00Z
+17996567,SAM End of Module Project 1 PowerPoint Module 01 Creating a Presentation,2025-07-11T03:59:00Z
+17996569,SAM Training PowerPoint Module 02 Adding Media and Special Effects,2025-07-11T03:59:00Z
+17996571,SAM Training PowerPoint Module 03 Applying Advanced Formatting to Objects,2025-07-11T03:59:00Z
+17996573,SAM Training PowerPoint Module 04 Advanced Animations and Distributing Presentations,2025-07-11T03:59:00Z
+17992797,Biz Cafe Excel Capstone,2025-07-18T03:59:00Z
+17954469,MindTap Link,nan
+17996555,SAM End of Module Project 1 Excel Module 01 Getting Started with Excel,nan
