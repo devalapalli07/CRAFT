@@ -1,3 +1,4 @@
+
 import os
 import csv
 import json
@@ -135,7 +136,9 @@ class Command(BaseCommand):
         for course_id in course_ids:
             logging.info(f"Fetching assignments for {len(student_ids)} students in course {course_id}...")
             course_data = fetch_all_data_concurrently(course_id, student_ids)
-            all_data.update(course_data)
+            for sid, data in course_data.items():
+                if sid not in all_data or not all_data[sid]:
+                    all_data[sid] = data
 
         with open(raw_json_file, 'w') as f:
             json.dump(all_data, f, indent=2)
