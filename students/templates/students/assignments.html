@@ -17,8 +17,8 @@
         <nav>
     <ul>
         <li><a href="{% url 'home' %}">Home</a></li>
-        <li><a href="{% url 'last_login' %}">Last login</a></li>
-        <li><a href="{% url 'select_assignments' %}">Assignments</a></li>
+		<li><a href="{% url 'select_assignments' %}">Assignments</a></li>
+        <li><a href="{% url 'last_login' %}">Last Login</a></li>
         <li> 
         {% if user.is_authenticated %}
             <form method="post" action="{% url 'logout' %}" style="display:inline;">
@@ -46,14 +46,16 @@
         {% endfor %}
     </select>
 
-    <!-- Existing assignment filter -->
-    <label for="assignment-filter">Assignment:</label>
-    <select id="assignment-filter" name="assignment">
-        <option value="">Select Assignment</option>
-        {% for assignment in assignments %}
-            <option value="{{ assignment.id }}">{{ assignment.title }}</option>
-        {% endfor %}
-    </select>
+    <!-- Multi-Assignment Filter -->
+        <label for="assignment-filter">Assignments:</label>
+        <select id="assignment-filter" name="assignments" multiple>
+            {% for assignment in assignments %}
+                <option value="{{ assignment.id }}"
+                    {% if assignment.id|stringformat:"s" in selected_assignments %}selected{% endif %}>
+                    {{ assignment.title }}
+                </option>
+            {% endfor %}
+        </select>
 
     <!-- Status filter -->
     <label for="status-filter">Status:</label>
@@ -105,6 +107,12 @@ $(document).ready(function() {
         width: '200px'  // Adjust width as needed
     });
 
+    $('#assignment-filter').select2({
+        width: '200px',  // Adjust width as needed
+        placeholder: "Select assignment",
+        allowClear: true
+    });
+
 
     function loadSubmissions(reset = false) {
         if (reset) {
@@ -120,7 +128,7 @@ $(document).ready(function() {
 
         const filters = {
             student: $('#student-filter').val(),
-            assignment: $('#assignment-filter').val(),
+            assignments: $('#assignment-filter').val(),
             status: $('#status-filter').val(),
             score: $('#score-filter').val(),
             page: currentPage
@@ -129,6 +137,7 @@ $(document).ready(function() {
         $.ajax({
             url: window.location.href,
             data: filters,
+			traditional: true, // ensures arrays are serialized correctly															 
             headers: {'X-Requested-With': 'XMLHttpRequest'},
             success: function(response) {
                 response.submissions.forEach(sub => {

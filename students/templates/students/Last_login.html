@@ -8,6 +8,8 @@
     <title>Last Login Activity</title>
     <link rel="stylesheet" href="{% static 'css/last_login.css' %}">
     <link href="https://cdn.jsdelivr.net/npm/select2/dist/css/select2.min.css" rel="stylesheet" />
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2/dist/js/select2.min.js"></script>
     <script>
@@ -28,6 +30,12 @@
 
             // Initialize Select2 for the inactive_days dropdown
             $('#inactive_days').select2();
+			// Now initialize Flatpickr for CALENDAR filter
+            flatpickr("#inactive_since", {
+                dateFormat: "Y-m-d",
+                allowInput: true,
+            defaultDate: "{{ inactive_since|default:'' }}"
+            });
         });
 
         function previewMessage() {
@@ -74,7 +82,7 @@ function sendEmail() {
         <nav>
     <ul>
         <li><a href="{% url 'home' %}">Home</a></li>
-        <li><a href="{% url 'last_login' %}">Last login</a></li>
+        <li><a href="{% url 'last_login' %}">Last Login</a></li>
         <li><a href="{% url 'select_assignments' %}">Assignments</a></li>
        <li> 
         {% if user.is_authenticated %}
@@ -94,16 +102,25 @@ function sendEmail() {
     <h1>Last Login Activity</h1>
     <section>
         <div class="filter-controls">
-            <label for="inactive_days">Filter by Inactive Days:</label>
-            <select id="inactive_days" onchange="window.location.href = '?inactive_days=' + this.value;">
-                <option value="">Select Days</option>
-                {% for day in inactive_days_options %}
-                    <option value="{{ day }}" {% if day == inactive_days_parameter %}selected{% endif %}>{{ day }}</option>
-                {% endfor %}
-            </select>
+            <!-- Adding Calendar based filtering-->
+            <form method="get" style="display: inline; margin-right: 1rem;">
+                <label for="inactive_since">Inactive Since:</label>
+                <input type="date" id="inactive_since" name="inactive_since" value="{{ inactive_since }}">
+                <button type="submit">Filter</button>
+                {% if inactive_since %}
+                        <a href="{% url 'last_login' %}" class="button">Clear</a>
+                {% endif %}
+            </form>
             <button id="send-email-button" style="display:none;" onclick="previewMessage()">Send Email</button>
         </div>
-
+        {% if enrollments %}
+            <p>{{ enrollments|length }} students found.</p>
+        {% endif %}
+        {% if inactive_since %}
+            <p style="margin-top: 1rem;">
+            The following students have not logged in since <strong>{{ inactive_since }}</strong> or earlier.
+            </p>
+        {% endif %}
         <table>
             <thead>
                 <tr>
