@@ -12,10 +12,15 @@ from django.views.decorators.csrf import csrf_exempt
 import json
 from django.core.paginator import Paginator
 import requests
+from django.contrib.auth.views import LoginView
+from django.contrib.auth.decorators import login_required
+
+class CustomLoginView(LoginView):
+    template_name = 'students/login.html'
 
  # Make sure the model name is correct
 
-
+@login_required
 def home(request):
     students = Studentlist.objects.all().order_by('name')
     sections = Studentlist.objects.values_list('section_name', flat=True).distinct()

@@ -1,0 +1,42 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CRAFT Login</title>
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+</head>
+<body>
+<div class="login-wrapper">
+    <div class="login-box">
+        <h2>CRAFT Login</h2>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.non_field_errors }}
+            <div class="form-group">
+                {{ form.username.label_tag }}
+                {{ form.username }}
+            </div>
+            <div class="form-group">
+                {{ form.password.label_tag }}
+                {{ form.password }}
+                <label class="show-password">
+                    <input type="checkbox" onclick="togglePassword()"> Show Password
+                </label>
+            </div>
+            <button type="submit">SIGN IN</button>
+        </form>
+        <div class="extra-links">
+            <p><a href="{% url 'password_reset' %}">Forgot Username / Password?</a></p>
+        </div>
+    </div>
+</div>
+
+<script>
+    function togglePassword() {
+        const pwd = document.querySelector('#id_password');
+        pwd.type = pwd.type === 'password' ? 'text' : 'password';
+    }
+</script>
+</body>
+</html>

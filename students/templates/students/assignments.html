@@ -3,6 +3,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+
     <title>Assignments</title>
     <link rel="stylesheet" href="{% static 'css/assignment.css' %}">
     <link href="https://cdn.jsdelivr.net/npm/select2/dist/css/select2.min.css" rel="stylesheet" />
@@ -13,12 +15,23 @@
     <header>
         <img src="{% static 'images/Logo.jpeg' %}" alt="Student Portal Logo" height="50">
         <nav>
-            <ul>
-                <li><a href="{% url 'home' %}">Home</a></li>
-                <li><a href="{% url 'select_assignments' %}">Assignments</a></li>
-                <li><a href="{% url 'last_login' %}">Last Login</a></li>
-            </ul>
-        </nav>
+    <ul>
+        <li><a href="{% url 'home' %}">Home</a></li>
+        <li><a href="{% url 'last_login' %}">Last login</a></li>
+        <li><a href="{% url 'select_assignments' %}">Assignments</a></li>
+        <li> 
+        {% if user.is_authenticated %}
+            <form method="post" action="{% url 'logout' %}" style="display:inline;">
+            {% csrf_token %}
+                <button type="submit" style="background:none;border:none;color:white;cursor:pointer;">
+                    Logout
+                </button>
+            </form>
+        {% endif %}
+        </li>
+    </ul>
+   
+</nav>
     </header>
     <h1>Assignments Dashboard</h1>
     <section>
