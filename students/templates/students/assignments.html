@@ -17,8 +17,8 @@
         <nav>
     <ul>
         <li><a href="{% url 'home' %}">Home</a></li>
+		<li><a href="{% url 'last_login' %}">Last Login</a></li>
 		<li><a href="{% url 'select_assignments' %}">Assignments</a></li>
-        <li><a href="{% url 'last_login' %}">Last Login</a></li>
         <li> 
         {% if user.is_authenticated %}
             <form method="post" action="{% url 'logout' %}" style="display:inline;">
