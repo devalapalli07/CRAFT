@@ -162,6 +162,10 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),  # Adjust this if your static directory is somewhere else
 ]
 
+CSRF_TRUSTED_ORIGINS = [
+    'https://asp-ined-internal-a7c9gmg3f5h7escb.eastus-01.azurewebsites.net',
+]
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
