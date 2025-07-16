@@ -58,32 +58,25 @@ def filter_students(request):
 
 def last_login(request):
     today = timezone.now().date()
-    inactive_days_parameter = request.GET.get('inactive_days', '')
 
-    base_query = Enrollment.objects.all()
+    #Adding CALENDAR based filter
+    from datetime import datetime
 
-    if inactive_days_parameter:
-        if 'week' in inactive_days_parameter:
-            weeks_count = int(inactive_days_parameter.split()[1])
-            min_days = 5 + (weeks_count - 1) * 7
-            max_days = 5 + weeks_count * 7
-            if weeks_count == 4:
-                base_query = base_query.filter(inactive_days__gt=27)
-            else:
-                base_query = base_query.filter(inactive_days__gt=min_days, inactive_days__lte=max_days)
-        else:
-            days = int(inactive_days_parameter)
-            base_query = base_query.filter(inactive_days=days)
+    inactive_since = request.GET.get('inactive_since', '')
+    base_query = Enrollment.objects.select_related('student').all()
+
+    if inactive_since:
+        try:
+            selected_date = datetime.strptime(inactive_since, "%Y-%m-%d").date()
+            base_query = base_query.filter(last_activity_at__date__lte=selected_date)
+        except ValueError:
+            pass  # Ignore invalid date inputs
 
     enrollments = base_query.order_by('-inactive_days')
 
     context = {
         'enrollments': enrollments,
-        'inactive_days_options': [
-            '1', '2', '3', '4', '5',
-            'Over 1 week', 'Over 2 weeks', 'Over 3 weeks', 'Over 4 weeks'
-        ],
-        'inactive_days_parameter': inactive_days_parameter,
+        'inactive_since': inactive_since,
     }
     return render(request, 'students/last_login.html', context)
 
@@ -229,15 +222,16 @@ def assignments_page(request):
     students = Submission.objects.order_by('student__name').values_list(
         'student__name', flat=True
     ).distinct()
+    selected_assignments = request.GET.getlist('assignments')
     context = {
         'assignments': assignments,
         'students': students,
+        'selected_assignments': selected_assignments,
     }
     
     if request.headers.get('x-requested-with') == 'XMLHttpRequest':
         # Get all filter parameters
         student_name = request.GET.get('student', '')
-        selected_assignment = request.GET.get('assignment')
         status_filter = request.GET.get('status')
         score_filter = request.GET.get('score')
         page_number = request.GET.get('page', 1)
@@ -250,8 +244,8 @@ def assignments_page(request):
             submissions = submissions.filter(student__name=student_name)
         
         # Assignment filter
-        if selected_assignment:
-            submissions = submissions.filter(assignment__id=selected_assignment)
+        if selected_assignments:
+            submissions = submissions.filter(assignment_id__in=selected_assignments)
         
         # Status filter
         if status_filter:
