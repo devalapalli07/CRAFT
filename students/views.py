@@ -55,7 +55,62 @@ def filter_students(request):
     students = Studentlist.objects.filter(query).order_by('name')
 
     return JsonResponse({'students': list(students.values('name', 'email', 'sis_id', 'section_name'))})
+@csrf_exempt
+def send_email_home(request):
+    YOUR_ACCESS_TOKEN = '13~xr3AF8NYRnhRkZMwWDHWBv3E9vMmMyAU3Jx2Fz4HvW6LZauzKTEEY8u9kcVfBZQu'
 
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body.decode('utf-8'))
+            student_ids = data.get('student_ids', [])
+            custom_message = data.get('custom_message', '')
+            subject = data.get('subject', 'Custom Notification')  # subject from frontend
+
+            print(f"Received data: {data}")
+            students = Enrollment.objects.filter(student_id__in=student_ids)
+
+            for enrollment in students:
+                student = enrollment.student
+
+                data_payload = {
+                    "recipients": [student.student_id],
+                    "subject": subject,
+                    "body": custom_message.format(student_name=student.name),
+                    "group_conversation": False,
+                }
+
+                print(f"Sending Data Payload: {data_payload}")
+
+                response = requests.post(
+                    "https://usflearn.instructure.com/api/v1/conversations",
+                    headers={
+                        "Authorization": f"Bearer {YOUR_ACCESS_TOKEN}",
+                        "Content-Type": "application/json"
+                    },
+                    json=data_payload
+                )
+
+                print(f"API Response: {response.text}")
+                if response.status_code != 201:
+                    print(f"Failed to send message to {student.email}. Status code: {response.status_code}")
+                else:
+                    print(f"Message sent to {student.email}")
+
+            return JsonResponse({'status': 'success'})
+
+        except json.JSONDecodeError as e:
+            print(f"JSON decode error: {e}")
+            return JsonResponse({'status': 'failure', 'error': 'Invalid JSON'}, status=400)
+        except Exception as e:
+            print(f"An error occurred: {e}")
+            return JsonResponse({'status': 'failure', 'error': str(e)}, status=500)
+
+    return JsonResponse({'status': 'failure'}, status=400)
+
+
+
+@login_required
+@csrf_exempt
 def last_login(request):
     today = timezone.now().date()
 
@@ -84,7 +139,7 @@ def last_login(request):
 
 @csrf_exempt
 def send_email(request):
-    YOUR_ACCESS_TOKEN = '13~WE6aXzRMrPTheVDUVn6cfQtV2VP7EtvDvfPJkt9fDEH9h9MY8JAJQQtB7a786mWu'
+    YOUR_ACCESS_TOKEN = '13~xr3AF8NYRnhRkZMwWDHWBv3E9vMmMyAU3Jx2Fz4HvW6LZauzKTEEY8u9kcVfBZQu'
     if request.method == 'POST':
         try:
             # Parse the JSON body
@@ -101,7 +156,7 @@ def send_email(request):
                 student = enrollment.student  # This is the related student instance
 
                 # Log the student information
-                print(f"Student: {student.name}, Student ID: {student.student_id}, Email: {student.email}")
+                #print(f"Student: {student.name}, Student ID: {student.student_id}, Email: {student.email}")
 
                 personalized_subject = "Reminder for Login Inactivity"
                 data_payload = {
@@ -141,82 +196,8 @@ def send_email(request):
 
     return JsonResponse({'status': 'failure'}, status=400)
 
-
-
-
-# def send_assignment_email(request):
-#     YOUR_ACCESS_TOKEN = '13~FT9GuNvrtD9NEHXhf6mwNwVcMZDUf4wFQHyUGYwkcr3FNHD7ATU7ka6uULcDBkR9'
-#     if request.method == 'POST':
-#         try:
-#             Parse the JSON body
-#             data = json.loads(request.body.decode('utf-8'))
-#             student_ids = data.get('student_ids', [])
-#             custom_message = data.get('custom_message', '')
-#             assignment_ids = data.get('assignments', [])
-
-#             Log the received data
-#             print(f"Received data: {data}")
-
-#             Get the assignment titles based on the selected assignment IDs
-#             assignments = Assignment.objects.filter(id__in=assignment_ids)
-#             assignment_titles = ', '.join([assignment.title for assignment in assignments])
-
-#             Log the assignment titles
-#             print(f"Assignment Titles: {assignment_titles}")
-
-#             students = Enrollment.objects.filter(student_id__in=student_ids)
-
-#             for enrollment in students:
-#                 student = enrollment.student  # This is the related student instance
-
-#                 Log the student information
-#                 print(f"Student: {student.name}, Student ID: {student.student_id}, Email: {student.email}")
-
-#                 Ensure the subject and body are set correctly
-#                 personalized_subject = "Reminder for Assignment Completion"
-#                 personalized_body = custom_message.format(
-#                     student_name=student.name,
-#                     assignments=assignment_titles
-#                 )
-
-#                 data_payload = {
-#                     "recipients": [student.student_id],  # Use student_id from Studentlist model
-#                     "subject": personalized_subject,
-#                     "body": personalized_body,
-#                     "group_conversation": False,
-#                 }
-
-#                 Log the payload before sending
-#                 print(f"Sending Data Payload: {data_payload}")
-
-#                 response = requests.post(
-#                     "https://usflearn.instructure.com/api/v1/conversations",
-#                     headers={
-#                         "Authorization": f"Bearer {YOUR_ACCESS_TOKEN}",
-#                         "Content-Type": "application/json"
-#                     },
-#                     json=data_payload
-#                 )
-
-#                 Log the response from the API
-#                 print(f"API Response: {response.text}")
-
-#                 if response.status_code != 201:
-#                     print(f"Failed to send message to {student.email}. Status code: {response.status_code}")
-#                 else:
-#                     print(f"Message sent to {student.email}")
-
-#             return JsonResponse({'status': 'success'})
-#         except json.JSONDecodeError as e:
-#             print(f"JSON decode error: {e}")
-#             return JsonResponse({'status': 'failure', 'error': 'Invalid JSON'}, status=400)
-#         except Exception as e:
-#             print(f"An error occurred: {e}")
-#             return JsonResponse({'status': 'failure', 'error': str(e)}, status=500)
-
-#     return JsonResponse({'status': 'failure'}, status=400)
-
-
+@login_required
+@csrf_exempt
 def assignments_page(request):
     assignments = Assignment.objects.all()
     students = Submission.objects.order_by('student__name').values_list(
