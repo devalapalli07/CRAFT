@@ -13,6 +13,8 @@ from logging.handlers import RotatingFileHandler
 import openpyxl
 from datetime import datetime
 import glob
+import re
+import zlib
 
 class Command(BaseCommand):
     help = 'Fetches Canvas assignment data for students and saves raw + cleaned output'
@@ -92,14 +94,70 @@ class Command(BaseCommand):
                     })
             return pd.DataFrame(rows)
 
-        def extract_transform_load(file_path):
+        # def extract_transform_load(file_path):
+        #     df = pd.read_excel(file_path)
+        #     assignments_csv = file_path.replace(".xlsx", "_assignments.csv")
+        #     submissions_csv = file_path.replace(".xlsx", "_submissions.csv")
+
+        #     assignments_seen = set()
+        #     with open(assignments_csv, mode='w', newline='', encoding='utf-8') as assignments_file, \
+        #          open(submissions_csv, mode='w', newline='', encoding='utf-8') as submissions_file:
+
+        #         assignments_writer = csv.writer(assignments_file)
+        #         submissions_writer = csv.writer(submissions_file)
+
+        #         assignments_writer.writerow(['id', 'title', 'due_date'])
+        #         submissions_writer.writerow(['student_id', 'assignment_id', 'submitted_at', 'score', 'status'])
+
+        #         for _, row in df.iterrows():
+        #             student_id = row.get('Student ID')
+        #             assignment_id = row.get('assignment_id')
+        #             title = row.get('title')
+        #             due_at = row.get('due_at')
+        #             status = row.get('status')
+        #             submitted_at = row.get('submitted_at')
+        #             score = row.get('score')
+
+        #             if assignment_id not in assignments_seen:
+        #                 assignments_writer.writerow([assignment_id, title, due_at])
+        #                 assignments_seen.add(assignment_id)
+
+        #             submissions_writer.writerow([student_id, assignment_id, submitted_at, score, status])
+
+        #     print(f"ETL complete. Files saved as:\n {assignments_csv}\n {submissions_csv}")
+        def extract_transform_load(file_path, group_by_due_date=False):
+            """
+            group_by_due_date=False  -> de-dupe purely by title (recommended)
+            group_by_due_date=True   -> de-dupe by (title, date-only(due_at))
+            """
             df = pd.read_excel(file_path)
             assignments_csv = file_path.replace(".xlsx", "_assignments.csv")
             submissions_csv = file_path.replace(".xlsx", "_submissions.csv")
 
-            assignments_seen = set()
+            def _normalize_title(t: str) -> str:
+                if not t:
+                    return ""
+                return re.sub(r"\s+", " ", t).strip().lower()
+
+            def _date_only(x):
+                if pd.isna(x):
+                    return ""
+                dt = pd.to_datetime(x, errors="coerce")
+                if pd.isna(dt):
+                    return ""
+                return dt.strftime("%Y-%m-%d")
+
+            def _canon_id(title, due_at):
+                key = _normalize_title(title)
+                if group_by_due_date:
+                    key = f"{key}|{_date_only(due_at)}"
+                # stable 32-bit positive int for Django PK
+                return zlib.crc32(key.encode("utf-8")) & 0xffffffff
+
+            # maps canonical_id -> (title, chosen_due_at)
+            canon_rows = {}
             with open(assignments_csv, mode='w', newline='', encoding='utf-8') as assignments_file, \
-                 open(submissions_csv, mode='w', newline='', encoding='utf-8') as submissions_file:
+                open(submissions_csv, mode='w', newline='', encoding='utf-8') as submissions_file:
 
                 assignments_writer = csv.writer(assignments_file)
                 submissions_writer = csv.writer(submissions_file)
@@ -108,21 +166,35 @@ class Command(BaseCommand):
                 submissions_writer.writerow(['student_id', 'assignment_id', 'submitted_at', 'score', 'status'])
 
                 for _, row in df.iterrows():
-                    student_id = row.get('Student ID')
-                    assignment_id = row.get('assignment_id')
-                    title = row.get('title')
-                    due_at = row.get('due_at')
-                    status = row.get('status')
+                    student_id   = row.get('Student ID')
+                    title        = row.get('title')
+                    due_at       = row.get('due_at')
+                    status       = row.get('status')
                     submitted_at = row.get('submitted_at')
-                    score = row.get('score')
+                    score        = row.get('score')
 
-                    if assignment_id not in assignments_seen:
-                        assignments_writer.writerow([assignment_id, title, due_at])
-                        assignments_seen.add(assignment_id)
+                    canon = _canon_id(title, due_at)
 
-                    submissions_writer.writerow([student_id, assignment_id, submitted_at, score, status])
+                    # keep first title as display; choose earliest non-null due date
+                    if canon not in canon_rows:
+                        canon_rows[canon] = [canon, title, due_at]
+                    else:
+                        prev_due = canon_rows[canon][2]
+                        if pd.isna(prev_due) and not pd.isna(due_at):
+                            canon_rows[canon][2] = due_at
+                        elif not pd.isna(prev_due) and not pd.isna(due_at):
+                            if pd.to_datetime(due_at) < pd.to_datetime(prev_due):
+                                canon_rows[canon][2] = due_at
+
+                    # every submission now points to canonical assignment id
+                    submissions_writer.writerow([student_id, canon, submitted_at, score, status])
+
+                # write unique assignments once
+                for row_out in canon_rows.values():
+                    assignments_writer.writerow(row_out)
 
             print(f"ETL complete. Files saved as:\n {assignments_csv}\n {submissions_csv}")
+
 
         # === MAIN EXECUTION ===
         logging.info("Merging student rosters...")
@@ -136,10 +208,16 @@ class Command(BaseCommand):
         for course_id in course_ids:
             logging.info(f"Fetching assignments for {len(student_ids)} students in course {course_id}...")
             course_data = fetch_all_data_concurrently(course_id, student_ids)
+            # for sid, data in course_data.items():
+            #     if sid not in all_data or not all_data[sid]:
+            #         all_data[sid] = data
             for sid, data in course_data.items():
+                if not data:
+                    continue
                 if sid not in all_data or not all_data[sid]:
-                    all_data[sid] = data
-
+                    all_data[sid] = list(data)  # make a copy
+                else:
+                    all_data[sid].extend(data)
         with open(raw_json_file, 'w') as f:
             json.dump(all_data, f, indent=2)
         logging.info(f"Raw assignment data saved to {raw_json_file}")
