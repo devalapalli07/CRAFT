@@ -20,12 +20,11 @@ class Command(BaseCommand):
 
         final_cleaned_file = os.path.join(output_dir, 'cleaned_enrollments_data.xlsx')
 
-        bearer_token = "13~f3GyTGZMMUAhhv96eZUhrKvT4wQfLh8UBLtFGck94EnrR9mw8BkmTtxzyFEwRR8e"
+        bearer_token = "13~z9rZFUBQVkNnCrHctw4KBDHauRA43DWVEuzNKrHW2Pe8EtfMZDThaLRNZu63xyDJ"
         headers = {"Authorization": f"Bearer {bearer_token}"}
 
         course_ids = [
-            "1960586",
-            "1962040"
+            "1987936", "1995292","1995626", "1985532"
         ]
 
         def get_all_data(api_url, headers):
