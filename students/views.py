@@ -57,7 +57,7 @@ def filter_students(request):
     return JsonResponse({'students': list(students.values('name', 'email', 'sis_id', 'section_name'))})
 @csrf_exempt
 def send_email_home(request):
-    YOUR_ACCESS_TOKEN = '13~xr3AF8NYRnhRkZMwWDHWBv3E9vMmMyAU3Jx2Fz4HvW6LZauzKTEEY8u9kcVfBZQu'
+    YOUR_ACCESS_TOKEN = '13~z9rZFUBQVkNnCrHctw4KBDHauRA43DWVEuzNKrHW2Pe8EtfMZDThaLRNZu63xyDJ'
 
     if request.method == 'POST':
         try:
