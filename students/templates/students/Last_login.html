@@ -48,6 +48,13 @@
             $("#message-modal").hide();
         }
 function sendEmail() {
+    const sendButton = document.getElementById("send-email-btn");
+    const spinner = document.getElementById("loading-spinner");
+
+    sendButton.disabled = true;
+    sendButton.classList.add("button-disabled");
+    spinner.style.display = "inline-block";
+
     const selectedStudents = $("input[name='student_ids']:checked")
         .map(function() { return this.value; }).get();
 
@@ -65,10 +72,18 @@ function sendEmail() {
         success: function(response) {
             alert("Emails sent successfully!");
             closeModal();
+            sendButton.disabled = false;
+            sendButton.classList.remove("button-disabled");
+            spinner.style.display = "none";
+
         },
         error: function(error) {
             alert("Failed to send emails.");
             console.log(error);
+            sendButton.disabled = false;
+            sendButton.classList.remove("button-disabled");
+            spinner.style.display = "none";
+
         }
     });
 }
@@ -148,7 +163,8 @@ function sendEmail() {
         <div id="message-modal" style="display:none;">
             <h2>Custom Message</h2>
             <textarea id="custom-message" rows="10" cols="50"></textarea>
-            <button class="button-green" onclick="sendEmail()">Send</button>
+            <button class="button-green" onclick="sendEmail()" id="send-email-btn">Send</button>
+            <span id="loading-spinner"></span>
             <button class="button-red" onclick="closeModal()">Cancel</button>
         </div>
     </section>

@@ -126,3 +126,70 @@ th {
     padding: 10px 20px;
     cursor: pointer;
 }
+
+/* Interactivity enhancements for buttons */
+.button-green, .button-red, #sendEmailBtn, #send-email-button {
+    transition: background-color 0.2s, transform 0.1s ease-in-out;
+}
+
+.button-green:hover,
+#sendEmailBtn:hover,
+#send-email-button:hover {
+    filter: brightness(1.1);
+}
+
+.button-green:active,
+#sendEmailBtn:active,
+#send-email-button:active,
+.button-red:active {
+    transform: scale(0.97);
+}
+
+/* Button Styles */
+.button-green, .button-red {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.button-green {
+    background-color: #28a745;
+}
+
+.button-green:hover {
+    background-color: #218838;
+}
+
+.button-red {
+    background-color: #dc3545;
+}
+
+.button-red:hover {
+    background-color: #c82333;
+}
+
+#loading-spinner {
+    display: none;
+    margin-left: 8px;
+    width: 16px;
+    height: 16px;
+    border: 2px solid #ccc;
+    border-top-color: #2e7d32;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.button-disabled {
+    background-color: #ccc !important;
+    cursor: not-allowed;
+}

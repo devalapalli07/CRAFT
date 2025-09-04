@@ -55,6 +55,8 @@ def filter_students(request):
     students = Studentlist.objects.filter(query).order_by('name')
 
     return JsonResponse({'students': list(students.values('name', 'email', 'sis_id', 'section_name'))})
+
+
 @csrf_exempt
 def send_email_home(request):
     YOUR_ACCESS_TOKEN = '13~z9rZFUBQVkNnCrHctw4KBDHauRA43DWVEuzNKrHW2Pe8EtfMZDThaLRNZu63xyDJ'
@@ -64,10 +66,14 @@ def send_email_home(request):
             data = json.loads(request.body.decode('utf-8'))
             student_ids = data.get('student_ids', [])
             custom_message = data.get('custom_message', '')
-            subject = data.get('subject', 'Custom Notification')  # subject from frontend
+            subject = data.get('subject') or 'Reminder for CGS2100'  # subject from frontend
+            
+            
 
             print(f"Received data: {data}")
-            students = Enrollment.objects.filter(student_id__in=student_ids)
+            # students = Enrollment.objects.filter(student_id__in=student_ids)
+            
+            students = Enrollment.objects.filter(student__sis_id__in=student_ids)
 
             for enrollment in students:
                 student = enrollment.student
@@ -76,7 +82,7 @@ def send_email_home(request):
                     "recipients": [student.student_id],
                     "subject": subject,
                     "body": custom_message.format(student_name=student.name),
-                    "group_conversation": False,
+                    "group_conversation": False
                 }
 
                 print(f"Sending Data Payload: {data_payload}")
@@ -139,7 +145,7 @@ def last_login(request):
 
 @csrf_exempt
 def send_email(request):
-    YOUR_ACCESS_TOKEN = '13~xr3AF8NYRnhRkZMwWDHWBv3E9vMmMyAU3Jx2Fz4HvW6LZauzKTEEY8u9kcVfBZQu'
+    YOUR_ACCESS_TOKEN = '13~z9rZFUBQVkNnCrHctw4KBDHauRA43DWVEuzNKrHW2Pe8EtfMZDThaLRNZu63xyDJ'
     if request.method == 'POST':
         try:
             # Parse the JSON body
@@ -199,7 +205,15 @@ def send_email(request):
 @login_required
 @csrf_exempt
 def assignments_page(request):
-    assignments = Assignment.objects.all()
+    import re
+
+    def natural_sort_key(title):
+    # Split string into list of parts: ['Bellini #', 1, '', 12, ' more']
+        return [int(part) if part.isdigit() else part.lower() for part in re.split(r'(\d+)', title)]
+
+    assignments = sorted(Assignment.objects.all(), key=lambda a: natural_sort_key(a.title))
+
+    # assignments = Assignment.objects.all().order_by('title')
     students = Submission.objects.order_by('student__name').values_list(
         'student__name', flat=True
     ).distinct()

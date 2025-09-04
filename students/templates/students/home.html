@@ -72,10 +72,10 @@
                 <tbody>
                     {% for student in students %}
                     <tr>
-                        <td><input type="checkbox" class="studentCheckbox" data-name="{{ student.name }}" data-email="{{ student.email }}"></td>
+                        <td><input type="checkbox" class="studentCheckbox" data-name="{{ student.name }}" data-email="{{ student.email }}" data-student-id="{{ student.student_id }}"></td>
                         <td>{{ student.name }}</td>
                         <td>{{ student.email }}</td>
-                        <td class="sis-id-cell">{{ student.sis_id }}</td>
+                        <td class="student-id-cell">{{ student.sis_id }}</td>
                         <td class="section-name-cell">{{ student.section_name|slice:"11:" }}</td>
                     </tr>
                     {% endfor %}
@@ -97,17 +97,20 @@ Dear {student_name},
 This is a reminder to check your dashboard.
 
 Regards,  
-Your TA
+Professor
     </textarea><br><br>
 
-    <button onclick="sendEmails()" class="button-green">Send</button>
+    <button onclick="sendEmails()" class="button-green" id="send-email-btn">Send</button>
+        <span id="loading-spinner"></span>
     <button onclick="closeEmailModal()" class="button-red">Cancel</button>
 </div>
 
 
     <script>
         $(document).ready(function() {
-            $('#section').select2({ placeholder: "Select an option", allowClear: true });
+            $('#section').select2({ placeholder: "Select one or more sections", allowClear: true, width: '280px' });
+
+            $('#filter-name, #filter-email, #filter-sis-id').css('width', '240px');
 
             updateStudentList();
 
@@ -122,10 +125,10 @@ Your TA
         });
 
         function updateStudentList() {
-            const name = $('#filter-name').val();
-            const email = $('#filter-email').val();
-            const sisId = $('#filter-sis-id').val();
-            const sections = $('#section').val();
+            const name = $('#filter-name').val() || '';
+            const email = $('#filter-email').val() || '';
+            const sisId = $('#filter-sis-id').val() || '';
+            const sections = $('#section').val() || '';
 
             const params = new URLSearchParams({
                 name, email, sis_id: sisId, sections: sections.join(',')
@@ -140,7 +143,7 @@ Your TA
                     data.students.forEach(student => {
                         const row = `
                             <tr>
-                                <td><input type="checkbox" class="studentCheckbox" data-name="${student.name}" data-email="${student.email}"></td>
+                                <td><input type="checkbox" class="studentCheckbox" data-name="${student.name}" data-email="${student.email}" data-student-id="${student.sis_id}"></td>
                                 <td>${student.name}</td>
                                 <td>${student.email}</td>
                                 <td class="sis-id-cell">${student.sis_id}</td>
@@ -161,8 +164,16 @@ Your TA
         }
 
         function sendEmails() {
+            const sendButton = document.getElementById("send-email-btn");
+            const spinner = document.getElementById("loading-spinner");
+
+            sendButton.disabled = true;
+            sendButton.classList.add("button-disabled");
+            spinner.style.display = "inline-block";
+
     const selectedStudentIds = $('.studentCheckbox:checked').map(function () {
-        return $(this).closest('tr').find('.sis-id-cell').text().trim();
+        // return $(this).closest('tr').find('.sis-id-cell').text().trim();
+        return $(this).data('student-id');
     }).get();
 
     const subject = $('#emailSubject').val();
@@ -181,10 +192,16 @@ Your TA
         success: function(response) {
             alert("Emails sent!");
             closeEmailModal();
+            sendButton.disabled = false;
+            sendButton.classList.remove("button-disabled");
+            spinner.style.display = "none";
         },
         error: function(error) {
             alert("Failed to send emails.");
             console.error(error);
+            sendButton.disabled = false;
+            sendButton.classList.remove("button-disabled");
+            spinner.style.display = "none";
         }
     });
 }
