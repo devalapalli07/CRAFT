@@ -112,50 +112,111 @@ class Command(BaseCommand):
         self.stdout.write(self.style.SUCCESS(f"✅ Imported {len(assignments)} assignments."))
 
         # === Import Submissions ===
+        # self.stdout.write("📥 Importing Submissions...")
+        # submissions = []
+        # with open(submissions_file, newline='', encoding='utf-8') as f:
+        #     reader = csv.DictReader(f)
+        #     for row in reader:
+        #         # Get and validate student
+        #         student = Studentlist.objects.filter(student_id=row["student_id"]).first()
+        #         if not student:
+        #             self.stdout.write(self.style.WARNING(f"❌ Student not found: {row['student_id']}"))
+        #             continue
+
+        #         # Validate and get assignment by ID
+        #         try:
+        #             assignment_id = int(row["assignment_id"])
+        #             assignment = Assignment.objects.filter(id=assignment_id).first()
+        #         except (ValueError, TypeError):
+        #             self.stdout.write(self.style.ERROR(f"❌ Invalid assignment ID: {row['assignment_id']}"))
+        #             continue
+
+        #         if not assignment:
+        #             self.stdout.write(self.style.WARNING(f"❌ Assignment not found: {assignment_id}"))
+        #             continue
+
+        #         # Convert submission datetime
+        #         submitted = make_safe_aware(row.get("submitted_at"))
+
+        #         # Parse score safely
+        #         # Parse score safely
+        #         raw_score = row.get("score")
+
+        #         try:
+        #             # Some values might be strings like "NaN", so we coerce to float, or set None
+        #             score = float(raw_score)
+        #             if not pd.notna(score):  # catches float('nan'), etc.
+        #                 score = None
+        #         except (TypeError, ValueError):
+        #             self.stdout.write(self.style.WARNING(
+        #                 f"⚠️ Invalid score '{raw_score}' for student {row.get('student_id')} assignment {row.get('assignment_id')}. Setting to NULL."
+        #             ))
+        #             score = None
+
+
+
+        #         # Append submission
+        #         submissions.append(Submission(
+        #             student=student,
+        #             assignment=assignment,
+        #             submitted_at=submitted,
+        #             score=score,
+        #             status=row.get("status") or "floating"
+        #         ))
+
+        # Submission.objects.bulk_create(submissions)
+        # self.stdout.write(self.style.SUCCESS(f"✅ Imported {len(submissions)} submissions."))
+
+        # self.stdout.write(self.style.SUCCESS("🎉 All Canvas data successfully imported."))
+        
+        
+        # === Import Submissions ===
         self.stdout.write("📥 Importing Submissions...")
+        
+        # Preload lookups to avoid N+1 queries
+        students_map = {s.student_id: s for s in Studentlist.objects.all()}
+        assignments_map = {a.id: a for a in Assignment.objects.all()}
+        
         submissions = []
+        batch_size = 2000
+        count = 0
+        
         with open(submissions_file, newline='', encoding='utf-8') as f:
             reader = csv.DictReader(f)
             for row in reader:
-                # Get and validate student
-                student = Studentlist.objects.filter(student_id=row["student_id"]).first()
+                # Resolve student quickly
+                student = students_map.get(row["student_id"])
                 if not student:
                     self.stdout.write(self.style.WARNING(f"❌ Student not found: {row['student_id']}"))
                     continue
-
-                # Validate and get assignment by ID
+        
+                # Resolve assignment quickly
                 try:
                     assignment_id = int(row["assignment_id"])
-                    assignment = Assignment.objects.filter(id=assignment_id).first()
                 except (ValueError, TypeError):
                     self.stdout.write(self.style.ERROR(f"❌ Invalid assignment ID: {row['assignment_id']}"))
                     continue
-
+        
+                assignment = assignments_map.get(assignment_id)
                 if not assignment:
                     self.stdout.write(self.style.WARNING(f"❌ Assignment not found: {assignment_id}"))
                     continue
-
+        
                 # Convert submission datetime
                 submitted = make_safe_aware(row.get("submitted_at"))
-
-                # Parse score safely
+        
                 # Parse score safely
                 raw_score = row.get("score")
-
                 try:
-                    # Some values might be strings like "NaN", so we coerce to float, or set None
                     score = float(raw_score)
-                    if not pd.notna(score):  # catches float('nan'), etc.
+                    if not pd.notna(score):  # catches NaN
                         score = None
                 except (TypeError, ValueError):
                     self.stdout.write(self.style.WARNING(
                         f"⚠️ Invalid score '{raw_score}' for student {row.get('student_id')} assignment {row.get('assignment_id')}. Setting to NULL."
                     ))
                     score = None
-
-
-
-                # Append submission
+        
                 submissions.append(Submission(
                     student=student,
                     assignment=assignment,
@@ -163,8 +224,18 @@ class Command(BaseCommand):
                     score=score,
                     status=row.get("status") or "floating"
                 ))
-
-        Submission.objects.bulk_create(submissions)
-        self.stdout.write(self.style.SUCCESS(f"✅ Imported {len(submissions)} submissions."))
-
+        
+                # Bulk insert in batches
+                if len(submissions) >= batch_size:
+                    Submission.objects.bulk_create(submissions, batch_size)
+                    count += len(submissions)
+                    self.stdout.write(f"✅ Inserted {count} submissions so far...")
+                    submissions = []
+        
+        # Insert leftovers
+        if submissions:
+            Submission.objects.bulk_create(submissions, batch_size)
+            count += len(submissions)
+        
+        self.stdout.write(self.style.SUCCESS(f"✅ Imported {count} submissions."))
         self.stdout.write(self.style.SUCCESS("🎉 All Canvas data successfully imported."))
