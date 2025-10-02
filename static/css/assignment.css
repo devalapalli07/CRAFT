@@ -18,6 +18,8 @@ header img {
 nav ul {
     list-style: none;
     display: flex;
+    margin: 0;
+    padding: 0;
 }
 
 nav ul li {
@@ -33,20 +35,24 @@ h1 {
     text-align: center;
     margin-top: 20px;
 }
-
-section {
-    padding: 20px;
-}
-
 .filter-controls {
     display: flex;
+    justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
-    margin-bottom: 20px;
+    margin: 1rem 10px; /* Push everything 10px inside from left/right */
 }
 
-.filter-controls label {
-    margin-right: 10px;
+.filters-left {
+    display: grid;
+    grid-template-columns: auto auto auto auto auto auto auto auto;
+    column-gap: 10px;
+    align-items: center;
+    margin-left: 10px; /* Moves filters right */
+}
+.filters-right {
+    display: flex;
+    align-items: center;
 }
 
 .filter-controls select {
@@ -54,67 +60,54 @@ section {
     margin-right: 20px;
     margin-bottom: 10px;
 }
-#loading {
-    padding: 10px;
-    text-align: center;
-    background: #f0f0f0;
-    margin: 10px 0;
-}
-#send-email-button {
-    margin-left: auto;
+
+#sendEmailBtn {
     background-color: #007bff;
     color: white;
     border: none;
     padding: 10px 20px;
-    font-size: 16px;
+    font-size: 14px;
     cursor: pointer;
-    transition: background-color 0.3s;
+    margin-right: 10px;
 }
 
-#send-email-button:hover {
+#sendEmailBtn:hover {
     background-color: #0056b3;
 }
 
 table {
     width: 100%;
     border-collapse: collapse;
-}
-
-table, th, td {
-    border: 1px solid #dee2e6;
+    margin-bottom: 20px;
 }
 
 th, td {
+    border: 1px solid #ddd;
     padding: 8px;
     text-align: left;
 }
 
 th {
-    background-color: #f1f1f1;
+    background-color: #f2f2f2;
 }
 
-#message-modal {
+.sis-id-cell {
+    padding-right: 20px;
+}
+
+.section-name-cell {
+    padding-left: 20px;
+}
+
+.modal {
+    display: none;
     position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: white;
+    top: 20%;
+    left: 35%;
+    background: #fff;
     padding: 20px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    border: 1px solid #ccc;
     z-index: 1000;
-}
-
-#message-modal h2 {
-    margin-top: 0;
-}
-
-#message-modal textarea {
-    width: 100%;
-    box-sizing: border-box;
-}
-
-#message-modal button {
-    margin-top: 10px;
 }
 
 .button-green {
@@ -133,3 +126,173 @@ th {
     cursor: pointer;
 }
 
+/* Interactivity enhancements for buttons */
+.button-green, .button-red, #sendEmailBtn, #send-email-button {
+    transition: background-color 0.2s, transform 0.1s ease-in-out;
+}
+
+.button-green:hover,
+#sendEmailBtn:hover,
+#send-email-button:hover {
+    filter: brightness(1.1);
+}
+
+.button-green:active,
+#sendEmailBtn:active,
+#send-email-button:active,
+.button-red:active {
+    transform: scale(0.97);
+}
+
+/* Button Styles */
+.button-green, .button-red {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.button-green {
+    background-color: #28a745;
+}
+
+.button-green:hover {
+    background-color: #218838;
+}
+
+.button-red {
+    background-color: #dc3545;
+}
+
+.button-red:hover {
+    background-color: #c82333;
+}
+
+#loading-spinner {
+    display: none;
+    margin-left: 8px;
+    width: 16px;
+    height: 16px;
+    border: 2px solid #ccc;
+    border-top-color: #2e7d32;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.button-disabled {
+    background-color: #ccc !important;
+    cursor: not-allowed;
+}
+
+
+/* --- Stacked multi-select (wrap chips), 3 rows max, wider, with clear + caret --- */
+
+/* container: grow with content; reserve enough space for [× | caret] on the right */
+.select2-container--default .select2-selection--multiple.s2-stack{
+  position: relative;
+  box-sizing: border-box;
+  min-height: 36px;
+  height: auto;                 /* grow with chips */
+  border: 1px solid #aaa;
+  border-radius: 4px;
+  padding: 6px 56px 6px 8px;    /* <-- more right padding so clicks on caret work */
+  cursor: pointer;
+}
+
+/* chips + inline search: wrap to new lines; vertical scroll after 3 rows */
+.select2-selection.s2-stack .select2-selection__rendered{
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;              /* wrap chips vertically */
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  max-height: 84px;             /* ~3 rows (tweak to taste) */
+  overflow-y: auto;             /* vertical scroll after 3 rows */
+  overflow-x: hidden;
+}
+
+/* cancel floats so chips don't overlap text; make remove icon sit before label */
+.select2-selection.s2-stack .select2-selection__choice{
+  float: none;
+  display: inline-flex;
+  align-items: center;
+  margin: 0;
+  padding: 0 8px;
+  line-height: 22px;
+  border-radius: 3px;
+  max-width: 100%;
+}
+
+.select2-selection.s2-stack .select2-selection__choice__remove{
+  position: static;             /* no absolute/float */
+  order: 0;                     /* remove icon first */
+  margin-right: 6px;            /* spacing from label */
+  font-size: 14px;
+  line-height: 1;
+}
+
+.select2-selection.s2-stack .select2-selection__choice__display{
+  order: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* inline search: keep placeholder visible, but don't hog width */
+.select2-selection.s2-stack .select2-search--inline{ display:block; }
+.select2-selection.s2-stack .select2-search__field{
+  border: none !important;
+  outline: none;
+  padding: 0;
+  margin: 0;
+  height: 22px;
+  line-height: 22px;
+  flex: 1 0 140px;              /* small footprint; shows placeholder when empty */
+  min-width: 140px;
+}
+
+/* place the widget-level CLEAR (×) and the caret so both are clickable */
+.select2-selection.s2-stack .select2-selection__clear{
+  position: absolute;
+  right: 28px;                  /* × to the left of caret (as you wanted) */
+  top: 8px;
+  width: 16px;                  /* bound its click area so it doesn't cover caret */
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+}
+
+.select2-container--default .select2-selection--multiple.s2-stack::after{
+  content: "";
+  position: absolute;
+  right: 10px;                  /* caret at the far right */
+  top: 12px;
+  width: 0; height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 6px solid #666;
+  pointer-events: none;         /* caret never steals clicks */
+}
+
+/* flip caret when open */
+.select2-container--open .select2-selection--multiple.s2-stack::after{
+  border-top: none;
+  border-bottom: 6px solid #666;
+}
+
+/* single-selects: fix baseline height for perfect alignment */
+.select2-container--default .select2-selection--single{ height:36px; }
+.select2-container--default .select2-selection--single .select2-selection__rendered{ line-height:36px; }
+.select2-container--default .select2-selection--single .select2-selection__arrow{ height:36px; }

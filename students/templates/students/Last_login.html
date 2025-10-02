@@ -70,7 +70,8 @@ function sendEmail() {
             'X-CSRFToken': '{{ csrf_token }}'
         },
         success: function(response) {
-            alert("Emails sent successfully!");
+            // alert("Emails sent successfully!");
+            alert(`Status: ${response.status}\nSent: ${response.sent ?? "n/a"}\nFailed: ${response.failed ?? "n/a"}`);
             closeModal();
             sendButton.disabled = false;
             sendButton.classList.remove("button-disabled");

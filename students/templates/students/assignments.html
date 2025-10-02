@@ -6,8 +6,8 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 
     <title>Assignments</title>
-    <link rel="stylesheet" href="{% static 'css/assignment.css' %}">
     <link href="https://cdn.jsdelivr.net/npm/select2/dist/css/select2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="{% static 'css/assignment.css' %}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2/dist/js/select2.min.js"></script>
 </head>
@@ -37,9 +37,10 @@
     <section>
         <h2>Filter Assignments</h2>
 <div class="filter-controls">
+    <div class="filters-left">
     <!-- Student Name Dropdown -->
     <label for="student-filter">Student:</label>
-    <select id="student-filter" name="student" class="student-select">
+    <select id="student-filter" name="student" class="student-select" style="width:240px;">
         <option value="">All Students</option>
         {% for student in students %}
             <option value="{{ student }}">{{ student }}</option>
@@ -48,7 +49,7 @@
 
     <!-- Multi-Assignment Filter -->
         <label for="assignment-filter">Assignments:</label>
-        <select id="assignment-filter" name="assignments" multiple>
+        <select id="assignment-filter" name="assignments" multiple style="width:360px;">
             {% for assignment in assignments %}
                 <option value="{{ assignment.id }}"
                     {% if assignment.id|stringformat:"s" in selected_assignments %}selected{% endif %}>
@@ -59,8 +60,8 @@
 
     <!-- Status filter -->
     <label for="status-filter">Status:</label>
-    <select id="status-filter" name="status">
-        <option value="">Select Status</option>
+    <select id="status-filter" name="status" style="width:180px;">
+        <option></option>
         <option value="on_time">On Time</option>
         <option value="late">Late</option>
         <option value="missing">Missing</option>
@@ -69,19 +70,25 @@
 
     <!-- Fixed Score Range filter -->
     <label for="score-filter">Score Range:</label>
-    <select id="score-filter" name="score">
-        <option value="">Select Score Range</option>
+    <select id="score-filter" name="score" style="width:180px;">
+        <option></option>
         <option value="<40">Less than 40</option>
         <option value="40-60">40 - 60</option>
         <option value="60-80">60 - 80</option>
         <option value=">80">More than 80</option>
     </select>
 </div>
+    <div class="filters-right">
+        <button id="sendEmailBtn" style="display:none;" onclick="openAssignmentEmailModal()">Send Email</button>
+    </div>
+
+</div>
 
 <div id="assignmentTable">
     <table>
         <thead>
             <tr>
+                <th><input type="checkbox" id="selectAll"></th>
                 <th>Student Name</th>
                 <th>Assignment</th>
                 <th>Status</th>
@@ -95,93 +102,194 @@
     <div id="loading" style="display: none;">Loading more submissions...</div>
 </div>
 
+<!-- Assignment Email Modal -->
+<div id="assignmentEmailModal" style="display:none; position:fixed; top:20%; left:35%; background:#fff; padding:20px; border:1px solid #ccc; z-index:1000;">
+  <h2>Custom Message</h2>
+
+  <label for="asgEmailSubject">Subject:</label><br>
+  <input type="text" id="asgEmailSubject" placeholder="Assignment Reminder" style="width: 100%;"><br><br>
+
+  <label for="asgEmailBody">Message:</label><br>
+  <textarea id="asgEmailBody" rows="8" cols="60">
+Dear {student_name},
+
+This is a reminder about your assignment: {assignment_title}.
+Please review the instructions and submit it on time.
+
+Regards,
+Professor
+  </textarea><br><br>
+
+  <button class="button-green" onclick="sendAssignmentEmail()" id="send-email-btn">Send</button>
+  <span id="loading-spinner"></span>
+  <button class="button-red" onclick="closeAssignmentModal()">Cancel</button>
+</div>
+
 <script>
 $(document).ready(function() {
-    let currentPage = 1;
-    let isLoading = false;
-    let hasMore = true;
-    let searchTimeout = null;
+  let currentPage = 1;
+  let isLoading   = false;
+  let hasMore     = true;
+  let searchTimeout;
 
-    // Initialize Select2
-    $('#student-filter, #assignment-filter, #status-filter, #score-filter').select2({
-        width: '200px'  // Adjust width as needed
-    });
+  // Select2 setup (same as other pages)
+  $('#student-filter').select2({ placeholder: 'All Students', allowClear: true, width: 'style' });
+  $('#assignment-filter').select2({
+  placeholder: 'Select Assignments',
+  allowClear: true,
+  width: 'style',          // uses the 240px you set in HTML
+  closeOnSelect: false,    // keep dropdown open while picking multiple
+  selectionCssClass: 's2-stack' // apply stack style just to this widget
+  });
+  $('#status-filter').select2({ placeholder: 'Select Status', allowClear: true, width: 'style', minimumResultsForSearch: Infinity });
+  $('#score-filter').select2({ placeholder: 'Select Score Range', allowClear: true, width: 'style', minimumResultsForSearch: Infinity });
 
-    $('#assignment-filter').select2({
-        width: '280px',  // Adjust width as needed
-        placeholder: "Select assignment",
-        allowClear: true
-    });
 
+  // Show/hide Send Email button like Home/Last Login
+  $(document).on('change', '.studentCheckbox', function () {
+    $('#sendEmailBtn').toggle($('.studentCheckbox:checked').length > 0);
+  });
 
-    function loadSubmissions(reset = false) {
-        if (reset) {
-            currentPage = 1;
-            hasMore = true;
-            $('#submissionsBody').empty();
-        }
+  // Select-all toggles all row checkboxes + button visibility
+  $('#selectAll').on('change', function () {
+    $('.studentCheckbox').prop('checked', this.checked);
+    $('#sendEmailBtn').toggle(this.checked);
+  });
 
-        if (!hasMore || isLoading) return;
-
-        isLoading = true;
-        $('#loading').show();
-
-        const filters = {
-            student: $('#student-filter').val(),
-            assignments: $('#assignment-filter').val(),
-            status: $('#status-filter').val(),
-            score: $('#score-filter').val(),
-            page: currentPage
-        };
-
-        $.ajax({
-            url: window.location.href,
-            data: filters,
-			traditional: true, // ensures arrays are serialized correctly															 
-            headers: {'X-Requested-With': 'XMLHttpRequest'},
-            success: function(response) {
-                response.submissions.forEach(sub => {
-                    $('#submissionsBody').append(`
-                        <tr>
-                            <td>${sub.name}</td>
-                            <td>${sub.assignment}</td>
-                            <td>${sub.status}</td>
-                            <td>${sub.score || 'N/A'}</td>
-                        </tr>
-                    `);
-                });
-                
-                hasMore = response.has_next;
-                currentPage++;
-                isLoading = false;
-                $('#loading').hide();
-            }
-        });
+  function loadSubmissions(reset = false) {
+    if (reset) {
+      currentPage = 1;
+      hasMore = true;
+      $('#submissionsBody').empty();
     }
+    if (!hasMore || isLoading) return;
 
-    // Handle student name filter with debounce
-    $('#student-filter').on('input', function() {
-        clearTimeout(searchTimeout);
-        searchTimeout = setTimeout(() => {
-            loadSubmissions(true);
-        }, 500);
-    });
-    // handler for all filters
-    $('#student-filter, #assignment-filter, #status-filter, #score-filter').on('change', function() {
-        loadSubmissions(true);
-    });
+    isLoading = true;
+    $('#loading').show();
 
-    // Infinite scroll
-    $(window).scroll(function() {
-        if ($(window).scrollTop() + $(window).height() >= $(document).height() - 100) {
-            loadSubmissions();
-        }
-    });
+    const filters = {
+      student:     $('#student-filter').val(),
+      assignments: $('#assignment-filter').val(),
+      status:      $('#status-filter').val(),
+      score:       $('#score-filter').val(),
+      page:        currentPage
+    };
 
-    // Initial load
-    loadSubmissions();
+    $.ajax({
+      url: window.location.href,
+      data: filters,
+      traditional: true, // serialize arrays as repeated params
+      headers: {'X-Requested-With': 'XMLHttpRequest'},
+      success: function(response) {
+        response.submissions.forEach(sub => {
+          $('#submissionsBody').append(`
+            <tr>
+              <td>
+                <input type="checkbox"
+                  class="studentCheckbox"
+                  data-canvas-id="${sub.student_canvas_id}"
+                  data-sis-id="${sub.student_sis_id}"
+                  data-assignment-id="${sub.assignment_id}">
+              </td>
+              <td>${sub.name}</td>
+              <td>${sub.assignment}</td>
+              <td>${sub.status}</td>
+              <td>${sub.score || 'N/A'}</td>
+            </tr>
+          `);
+        });
+
+        hasMore = response.has_next;
+        currentPage++;
+        isLoading = false;
+        $('#loading').hide();
+      },
+      error: function() {
+        isLoading = false;
+        $('#loading').hide();
+      }
+    });
+  }
+
+  // Debounced text filter
+  $('#student-filter').on('input', function() {
+    clearTimeout(searchTimeout);
+    searchTimeout = setTimeout(() => loadSubmissions(true), 500);
+  });
+ 
+  // Other filters
+  $('#student-filter, #assignment-filter, #status-filter, #score-filter').on('change', function() {
+    loadSubmissions(true);
+  });
+
+  // Infinite scroll
+  $(window).on('scroll', function() {
+    if ($(window).scrollTop() + $(window).height() >= $(document).height() - 100) {
+      loadSubmissions();
+    }
+  });
+
+  // Initial load
+  loadSubmissions();
+
+  // === Helpers used by the modal ===
+  window.getSelectedStudentIds = function () {
+    // Use Canvas user_ids coming from data-canvas-id
+    return Array.from(document.querySelectorAll('.studentCheckbox:checked'))
+                .map(el => el.dataset.canvasId);
+  };
+
+  window.getSelectedAssignmentIds = function () {
+    const set = new Set(
+      Array.from(document.querySelectorAll('.studentCheckbox:checked'))
+           .map(el => String(el.dataset.assignmentId))
+    );
+    return Array.from(set);
+  };
+
+  window.openAssignmentEmailModal = function () {
+    document.getElementById('assignmentEmailModal').style.display = 'block';
+  };
+
+  window.closeAssignmentModal = function () {
+    document.getElementById('assignmentEmailModal').style.display = 'none';
+  };
+
+  window.sendAssignmentEmail = function () {
+    const btn  = document.getElementById("send-email-btn");
+    const spin = document.getElementById("loading-spinner");
+    btn.disabled = true;
+    btn.classList.add("button-disabled");
+    spin.style.display = "inline-block";
+
+    fetch("{% url 'send_email_assignments' %}", {
+      method: "POST",
+      headers: {"Content-Type":"application/json", "X-CSRFToken":"{{ csrf_token }}"},
+      body: JSON.stringify({
+        assignment_ids: getSelectedAssignmentIds(),
+        student_ids:    getSelectedStudentIds(),
+        subject:        document.getElementById("asgEmailSubject").value,
+        custom_message: document.getElementById("asgEmailBody").value
+      })
+    })
+    .then(r => r.json())
+    .then(res => {
+      alert(`Status: ${res.status}\nSent: ${res.sent}\nFailed: ${res.failed}`);
+      closeAssignmentModal();
+    })
+    .catch(err => {
+      alert("Error sending emails");
+      console.error(err);
+    })
+    .finally(() => {
+      btn.disabled = false;
+      btn.classList.remove("button-disabled");
+      spin.style.display = "none";
+    });
+  };
 });
 </script>
+
     </section>
 </body>
 </html>

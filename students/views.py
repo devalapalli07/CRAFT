@@ -2,6 +2,7 @@ from django import forms
 from django.shortcuts import  redirect, render
 from django.http import JsonResponse
 from django.db.models import Prefetch,Q
+from django.conf import settings
 from collections import defaultdict
 import re
 import requests
@@ -99,6 +100,7 @@ def send_bulk_by_user_ids(token: str, user_ids, subject: str, body: str,
             "body": body,
             "group_conversation": True,
             "bulk_message": True,
+            "force_new": True,
         }
         if async_mode:
             payload["mode"] = "async"
@@ -144,70 +146,21 @@ def send_email_home(request):
                 async_mode=True,
             )
 
-            summary = [{"batch_size": len(b), "status": s, "body": t[:200]} for (b, s, t) in results]
-            all_ok = all(s == 201 for (_, s, _) in results)
+            # summary = [{"batch_size": len(b), "status": s, "body": t[:200]} for (b, s, t) in results]
+            # all_ok = all(s == 201 for (_, s, _) in results)
 
-            return JsonResponse({"status": "success" if all_ok else "partial", "details": summary})
+            # return JsonResponse({"status": "success" if all_ok else "partial", "details": summary})
+            summary = [{"batch_size": len(b), "status": s, "body": t[:200]} for (b, s, t) in results]
+            total  = sum(len(b) for (b, _, _) in results)
+            sent   = sum(len(b) for (b, s, _) in results if 200 <= s < 300)
+            failed = max(0, total - sent)
+            status = "success" if failed == 0 else "partial"
+            return JsonResponse({"status": status, "sent": sent, "failed": failed, "details": summary})
 
         except Exception as e:
             return JsonResponse({"status": "failure", "error": str(e)}, status=500)
 
     return JsonResponse({"status": "failure"}, status=400)
-
-# def send_email_home(request):
-#     YOUR_ACCESS_TOKEN = '13~2tK79VnPeQEWwWcuHVe2WQwKyK87TXBvrUmBMKe2VtJUfT7rJmKmZvBHcwu4VU2w'
-
-#     if request.method == 'POST':
-#         try:
-#             data = json.loads(request.body.decode('utf-8'))
-#             student_ids = data.get('student_ids', [])
-#             custom_message = data.get('custom_message', '')
-#             subject = data.get('subject') or 'Reminder for CGS2100'  # subject from frontend
-            
-            
-
-#             print(f"Received data: {data}")
-#             # students = Enrollment.objects.filter(student_id__in=student_ids)
-            
-#             students = Enrollment.objects.filter(student__sis_id__in=student_ids)
-
-#             for enrollment in students:
-#                 student = enrollment.student
-
-#                 data_payload = {
-#                     "recipients": [student.student_id],
-#                     "subject": subject,
-#                     "body": custom_message.format(student_name=student.name),
-#                     "group_conversation": False
-#                 }
-
-#                 print(f"Sending Data Payload: {data_payload}")
-
-#                 response = requests.post(
-#                     "https://usflearn.instructure.com/api/v1/conversations",
-#                     headers={
-#                         "Authorization": f"Bearer {YOUR_ACCESS_TOKEN}",
-#                         "Content-Type": "application/json"
-#                     },
-#                     json=data_payload
-#                 )
-
-#                 print(f"API Response: {response.text}")
-#                 if response.status_code != 201:
-#                     print(f"Failed to send message to {student.email}. Status code: {response.status_code}")
-#                 else:
-#                     print(f"Message sent to {student.email}")
-
-#             return JsonResponse({'status': 'success'})
-
-#         except json.JSONDecodeError as e:
-#             print(f"JSON decode error: {e}")
-#             return JsonResponse({'status': 'failure', 'error': 'Invalid JSON'}, status=400)
-#         except Exception as e:
-#             print(f"An error occurred: {e}")
-#             return JsonResponse({'status': 'failure', 'error': str(e)}, status=500)
-
-#     return JsonResponse({'status': 'failure'}, status=400)
 
 
 
@@ -269,6 +222,7 @@ def send_email(request):
                     "subject": "Reminder for Login Inactivity",
                     "body": body,
                     "group_conversation": False,
+                    "force_new": True,
                 }
 
                 response = requests.post(
@@ -303,63 +257,7 @@ def send_email(request):
             return JsonResponse({"status": "failure", "error": str(e)}, status=500)
 
     return JsonResponse({"status": "failure"}, status=400)
-# def send_email(request):
-#     YOUR_ACCESS_TOKEN = '13~2tK79VnPeQEWwWcuHVe2WQwKyK87TXBvrUmBMKe2VtJUfT7rJmKmZvBHcwu4VU2w'
-#     if request.method == 'POST':
-#         try:
-#             # Parse the JSON body
-#             data = json.loads(request.body.decode('utf-8'))
-#             student_ids = data.get('student_ids', [])
-#             custom_message = data.get('custom_message', '')
 
-#             # Log the received data
-#             print(f"Received data: {data}")
-
-#             students = Enrollment.objects.filter(student_id__in=student_ids)
-
-#             for enrollment in students:
-#                 student = enrollment.student  # This is the related student instance
-
-#                 # Log the student information
-#                 #print(f"Student: {student.name}, Student ID: {student.student_id}, Email: {student.email}")
-
-#                 personalized_subject = "Reminder for Login Inactivity"
-#                 data_payload = {
-#                     "recipients": [student.student_id],  # Use student_id from Studentlist model
-#                     "subject": personalized_subject,
-#                     "body": custom_message.format(student_name=student.name, inactive_days=enrollment.inactive_days),
-#                     "group_conversation": False,
-#                 }
-
-#                 # Log the payload before sending
-#                 print(f"Sending Data Payload: {data_payload}")
-
-#                 response = requests.post(
-#                     "https://usflearn.instructure.com/api/v1/conversations",
-#                     headers={
-#                         "Authorization": f"Bearer {YOUR_ACCESS_TOKEN}",
-#                         "Content-Type": "application/json"
-#                     },
-#                     json=data_payload
-#                 )
-
-#                 # Log the response from the API
-#                 print(f"API Response: {response.text}")
-
-#                 if response.status_code != 201:
-#                     print(f"Failed to send message to {student.email}. Status code: {response.status_code}")
-#                 else:
-#                     print(f"Message sent to {student.email}")
-
-#             return JsonResponse({'status': 'success'})
-#         except json.JSONDecodeError as e:
-#             print(f"JSON decode error: {e}")
-#             return JsonResponse({'status': 'failure', 'error': 'Invalid JSON'}, status=400)
-#         except Exception as e:
-#             print(f"An error occurred: {e}")
-#             return JsonResponse({'status': 'failure', 'error': str(e)}, status=500)
-
-#     return JsonResponse({'status': 'failure'}, status=400)
 
 @login_required
 @csrf_exempt
@@ -431,7 +329,10 @@ def assignments_page(request):
             'name': sub.student.name,
             'assignment': sub.assignment.title,
             'status': sub.get_status_display(),  # Show display value
-            'score': sub.score
+            'score': sub.score,
+            'assignment_id': sub.assignment_id,  
+            'student_canvas_id': sub.student.student_id, # NEW — Canvas user_id
+            'student_sis_id': sub.student.sis_id,        # NEW — SIS id
         } for sub in page]
         
         return JsonResponse({
@@ -445,6 +346,112 @@ class MessageForm(forms.Form):
 
 
 
+@csrf_exempt
+def send_email_assignments(request):
+    BATCH_SIZE = 20          # send in bursts of 20
+    PAUSE_SECONDS = 0.5        # pause 0.5 second between bursts
+    YOUR_ACCESS_TOKEN = "13~z9rZFUBQVkNnCrHctw4KBDHauRA43DWVEuzNKrHW2Pe8EtfMZDThaLRNZu63xyDJ"
+
+    if request.method != "POST":
+        return JsonResponse({"status": "failure"}, status=400)
+
+    try:
+        data = json.loads(request.body.decode("utf-8"))
+
+        # From the UI
+        assignment_ids     = data.get("assignment_ids", [])        # list[int]
+        student_ids        = data.get("student_ids", [])           # list[str] of Canvas user_ids (preferred)
+        student_sis_ids    = data.get("student_sis_ids", [])       # list[str] of SIS IDs (optional)
+        subject            = (data.get("subject") or "Assignment Reminder").strip()
+        custom_message     = (data.get("custom_message") or "").strip()
+
+        # ----- Resolve assignment(s) -----
+        assignments = list(Assignment.objects.filter(id__in=assignment_ids))
+        if not assignments:
+            return JsonResponse({"status": "failure", "error": "No matching assignments"}, status=400)
+
+        # We’ll support single or multiple assignments:
+        single_assignment  = len(assignments) == 1
+        assignment_title   = assignments[0].title if single_assignment else None
+        assignment_titles  = ", ".join(a.title for a in assignments)
+
+        # Default message if none provided (personalized + assignment-aware)
+        if not custom_message:
+            if single_assignment:
+                custom_message = (
+                    "Dear {student_name},\n\n"
+                    f"This is a reminder about your assignment: {assignment_title}.\n"
+                    "Please review the instructions and submit it on time.\n\n"
+                    "Regards,\nProfessor"
+                )
+            else:
+                custom_message = (
+                    "Dear {student_name},\n\n"
+                    f"This is a reminder about your assignments: {assignment_titles}.\n"
+                    "Please review the instructions and submit them on time.\n\n"
+                    "Regards,\nProfessor"
+                )
+
+        # ----- Resolve students -----
+        students_qs = Studentlist.objects.all()
+        if student_sis_ids:
+            students_qs = students_qs.filter(sis_id__in=student_sis_ids)
+        elif student_ids:
+            students_qs = students_qs.filter(student_id__in=student_ids)
+
+        students = list(students_qs)
+        if not students:
+            return JsonResponse({"status": "failure", "error": "No matching students"}, status=400)
 
 
+        # ----- Send in batched bursts -----
+        results = []
+        for i, student in enumerate(students, 1):
+            if not student or not student.student_id:
+                continue
 
+            # Personalize message
+            body = custom_message.format(
+                student_name=student.name,
+                assignment_title=assignment_title if single_assignment else assignment_titles
+            )
+
+            payload = {
+                "recipients": [student.student_id],     # Canvas user_id
+                "subject": data.get("subject") or "Assignment Reminder for CGS2100",
+                "body": body,
+                "group_conversation": False,
+                "force_new": True
+            }
+
+            resp = requests.post(
+                CANVAS_CONV_URL,
+                headers={
+                    "Authorization": f"Bearer {YOUR_ACCESS_TOKEN}",
+                    "Content-Type": "application/json",
+                },
+                json=payload
+            )
+
+            results.append({
+                "student": student.email,
+                "status": resp.status_code,
+                "response": resp.text[:200]
+            })
+
+            # throttle between bursts
+            if i % BATCH_SIZE == 0:
+                time.sleep(PAUSE_SECONDS)
+
+        sent = sum(1 for r in results if r["status"] == 201)
+        failed = len(results) - sent
+
+        return JsonResponse({
+            "status": "success" if failed == 0 else "partial",
+            "sent": sent,
+            "failed": failed,
+            "details": results[:30]  # truncate
+        })
+
+    except Exception as e:
+        return JsonResponse({"status": "failure", "error": str(e)}, status=500)

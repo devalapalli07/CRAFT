@@ -21,4 +21,5 @@ urlpatterns = [
     path('reset/done/', auth_views.PasswordResetCompleteView.as_view(), name='password_reset_complete'),
     path('logout/', auth_views.LogoutView.as_view(next_page='login'), name='logout'),
     path('send_email_home/', views.send_email_home, name='send_email_home'),
+    path('send_email_assignments/', views.send_email_assignments, name='send_email_assignments'),
 ]

@@ -190,7 +190,8 @@ Professor
             custom_message: message
         }),
         success: function(response) {
-            alert("Emails sent!");
+            // alert("Emails sent!");
+            alert(`Status: ${response.status}\nSent: ${response.sent ?? "n/a"}\nFailed: ${response.failed ?? "n/a"}`);
             closeEmailModal();
             sendButton.disabled = false;
             sendButton.classList.remove("button-disabled");
