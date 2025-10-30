@@ -82,40 +82,40 @@ WSGI_APPLICATION = 'CRAFT.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'mssql',  # Use the correct backend name
-        'NAME': 'InEdSQLInternal',
-        'USER':'craftlogindb',
-        'PASSWORD':'wNKqXIvQ1vVzFnGcMDyT',
-        'HOST': 'inedsqldbserverdb01.database.windows.net',
-        'PORT': '1433',  # Default port (1433)
-        'OPTIONS': {
-            'driver': 'ODBC Driver 18 for SQL Server',
-            'extra_params': 'Encrypt=Yes;TrustServerCertificate=Yes',  # Critical fix
-        },
-    }
-}
-#settings.py (local/dev variant)
-
 # DATABASES = {
-#     "default": {
-#         "ENGINE": "mssql",
-#         "NAME": "CRAFT",
-#         "HOST": r"Mohan",           # ⇐ INSTANCE name
-#         "PORT": "",                 # ⇐ blank when you specify an instance
-#         "USER": "",                 # integrated auth
-#         "PASSWORD": "",
-#         "OPTIONS": {
-#             "driver": "ODBC Driver 18 for SQL Server",
-#             "extra_params": (
-#                 "Trusted_Connection=yes;"  # Windows auth
-#                 "Encrypt=no;"              # local box → turn off TLS
-#                 "TrustServerCertificate=yes;"
-#             ),
+#     'default': {
+#         'ENGINE': 'mssql',  # Use the correct backend name
+#         'NAME': 'InEdSQLInternal',
+#         'USER':'craftlogindb',
+#         'PASSWORD':'wNKqXIvQ1vVzFnGcMDyT',
+#         'HOST': 'inedsqldbserverdb01.database.windows.net',
+#         'PORT': '1433',  # Default port (1433)
+#         'OPTIONS': {
+#             'driver': 'ODBC Driver 18 for SQL Server',
+#             'extra_params': 'Encrypt=Yes;TrustServerCertificate=Yes',  # Critical fix
 #         },
 #     }
 # }
+#settings.py (local/dev variant)
+
+DATABASES = {
+    "default": {
+        "ENGINE": "mssql",
+        "NAME": "CRAFT",
+        "HOST": r"MSI\SQLEXPRESS",           # ⇐ INSTANCE name
+        "PORT": "",                 # ⇐ blank when you specify an instance
+        "USER": "",                 # integrated auth
+        "PASSWORD": "",
+        "OPTIONS": {
+            "driver": "ODBC Driver 17 for SQL Server",
+            "extra_params": (
+                "Trusted_Connection=yes;"  # Windows auth
+                "Encrypt=no;"              # local box → turn off TLS
+                "TrustServerCertificate=yes;"
+            ),
+        },
+    }
+}
 
 
 
@@ -173,7 +173,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-# Auto-logout after 15 minutes (900 seconds) of inactivity
-SESSION_COOKIE_AGE = 900  # seconds (15 minutes)
-SESSION_SAVE_EVERY_REQUEST = True
-SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+# Auto-logout after 60 minutes of inactivity
+SESSION_COOKIE_AGE = 60 * 60 * 24 * 7   # long-lived cookie
+SESSION_SAVE_EVERY_REQUEST = False      # don’t slide cookie automatically
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True  # optional, if you want logout on browser close
+SESSION_IDLE_TIMEOUT = 60 * 60        # true idle window (60 min)
