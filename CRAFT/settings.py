@@ -180,8 +180,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-# Auto-logout after 15 minutes (900 seconds) of inactivity
-SESSION_COOKIE_AGE = 900  # seconds (15 minutes)
+# Auto-logout after inactivity (seconds)
+SESSION_COOKIE_AGE = int(os.getenv('SESSION_COOKIE_AGE', '900'))
 SESSION_SAVE_EVERY_REQUEST = True
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
