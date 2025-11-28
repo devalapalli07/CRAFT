@@ -1,0 +1,195 @@
+body {
+    font-family: Arial, sans-serif;
+}
+
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #333;
+    color: #fff;
+    padding: 10px 20px;
+}
+
+header img {
+    height: 50px;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+}
+
+nav ul li {
+    margin-left: 20px;
+}
+
+nav ul li a {
+    color: #fff;
+    text-decoration: none;
+}
+
+h1 {
+    text-align: center;
+    margin-top: 20px;
+}
+
+section {
+    padding: 20px;
+}
+
+.filter-controls {
+    display: flex;
+    align-items: center;
+    /*justify-content: space-between;*/
+    margin-bottom: 20px;
+}
+
+.filter-controls label {
+    margin-right: 10px;
+}
+
+.filter-controls select {
+    width: 200px;
+    margin-right: 20px;
+}
+
+#send-email-button {
+    margin-left:Auto;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#send-email-button:hover {
+    background-color: #0056b3;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table, th, td {
+    border: 1px solid #dee2e6;
+}
+
+th, td {
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    background-color: #f1f1f1;
+}
+
+#message-modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 20px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+#message-modal h2 {
+    margin-top: 0;
+}
+
+#message-modal textarea {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+#message-modal button {
+    margin-top: 10px;
+}
+
+.button-green {
+    background-color: green;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+.button-red {
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+/* Interactivity enhancements for buttons */
+.button-green, .button-red, #sendEmailBtn, #send-email-button {
+    transition: background-color 0.2s, transform 0.1s ease-in-out;
+}
+
+.button-green:hover,
+#sendEmailBtn:hover,
+#send-email-button:hover {
+    filter: brightness(1.1);
+}
+
+.button-green:active,
+#sendEmailBtn:active,
+#send-email-button:active,
+.button-red:active {
+    transform: scale(0.97);
+}
+
+/* Button Styles */
+.button-green, .button-red {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.button-green {
+    background-color: #28a745;
+}
+
+.button-green:hover {
+    background-color: #218838;
+}
+
+.button-red {
+    background-color: #dc3545;
+}
+
+.button-red:hover {
+    background-color: #c82333;
+}
+
+#loading-spinner {
+    display: none;
+    margin-left: 8px;
+    width: 16px;
+    height: 16px;
+    border: 2px solid #ccc;
+    border-top-color: #2e7d32;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.button-disabled {
+    background-color: #ccc !important;
+    cursor: not-allowed;
+}

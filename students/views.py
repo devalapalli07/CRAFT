@@ -25,13 +25,27 @@ class CustomLoginView(LoginView):
 @login_required
 def home(request):
     students = Studentlist.objects.all().order_by('name')
-    sections = Studentlist.objects.values_list('section_name', flat=True).distinct()
-    trimmed_sections = [re.match(r"(CGS\d+\.\d+)", section).group(1) if re.match(r"(CGS\d+\.\d+)", section) else section for section in sections]
+    sections_raw = Studentlist.objects.values_list('section_name', flat=True).distinct()
 
-    return render(request, 'students/home.html', {
-        'sections': trimmed_sections,
-        'students': students,
-    })
+    def format_section(section):
+        """
+        Build labels for filter (code only) while keeping full label for reference.
+        """
+        code_match = re.match(r"(CGS\d+\.?\d*)", section or "")
+        code = code_match.group(1) if code_match else (section or "").strip()
+        label = (section or "").strip()
+        return {"value": code, "label": code or label, "full": label or code}
+
+    sections = [format_section(sec) for sec in sections_raw]
+
+    return render(
+        request,
+        'students/home.html',
+        {
+            'sections': sections,
+            'students': students,
+        },
+    )
 
 def filter_students(request):
     name = request.GET.get('name', '')
@@ -64,6 +78,10 @@ def filter_students(request):
 
 # Canvas Conversations endpoint
 CANVAS_CONV_URL = "https://usflearn.instructure.com/api/v1/conversations"
+
+# Pull Canvas token from settings/env so no secrets live in code
+def _get_canvas_token():
+    return getattr(settings, "CANVAS_API_TOKEN", "") or ""
 
 # ---------------------------
 # Helper functions for bulk send
@@ -112,10 +130,12 @@ def send_bulk_by_user_ids(token: str, user_ids, subject: str, body: str,
 
 @csrf_exempt
 def send_email_home(request):
-    YOUR_ACCESS_TOKEN = "13~z9rZFUBQVkNnCrHctw4KBDHauRA43DWVEuzNKrHW2Pe8EtfMZDThaLRNZu63xyDJ"
-
     if request.method == "POST":
         try:
+            token = _get_canvas_token()
+            if not token:
+                return JsonResponse({"status": "failure", "error": "Canvas token not configured"}, status=500)
+
             data = json.loads(request.body.decode("utf-8"))
             student_ids = data.get("student_ids", [])
             custom_message = data.get("custom_message", "")
@@ -138,7 +158,7 @@ def send_email_home(request):
 
             # Bulk send
             results = send_bulk_by_user_ids(
-                token=YOUR_ACCESS_TOKEN,
+                token=token,
                 user_ids=user_ids,
                 subject=subject,
                 body=custom_message,
@@ -194,10 +214,12 @@ def last_login(request):
 
 @csrf_exempt
 def send_email(request):
-    YOUR_ACCESS_TOKEN = "13~z9rZFUBQVkNnCrHctw4KBDHauRA43DWVEuzNKrHW2Pe8EtfMZDThaLRNZu63xyDJ"
-
     if request.method == "POST":
         try:
+            token = _get_canvas_token()
+            if not token:
+                return JsonResponse({"status": "failure", "error": "Canvas token not configured"}, status=500)
+
             data = json.loads(request.body.decode("utf-8"))
             student_ids = data.get("student_ids", [])
             custom_message = data.get("custom_message", "")
@@ -228,7 +250,7 @@ def send_email(request):
                 response = requests.post(
                     CANVAS_CONV_URL,
                     headers={
-                        "Authorization": f"Bearer {YOUR_ACCESS_TOKEN}",
+                        "Authorization": f"Bearer {token}",
                         "Content-Type": "application/json",
                     },
                     json=payload,
@@ -350,12 +372,15 @@ class MessageForm(forms.Form):
 def send_email_assignments(request):
     BATCH_SIZE = 20          # send in bursts of 20
     PAUSE_SECONDS = 0.5        # pause 0.5 second between bursts
-    YOUR_ACCESS_TOKEN = "13~z9rZFUBQVkNnCrHctw4KBDHauRA43DWVEuzNKrHW2Pe8EtfMZDThaLRNZu63xyDJ"
 
     if request.method != "POST":
         return JsonResponse({"status": "failure"}, status=400)
 
     try:
+        token = _get_canvas_token()
+        if not token:
+            return JsonResponse({"status": "failure", "error": "Canvas token not configured"}, status=500)
+
         data = json.loads(request.body.decode("utf-8"))
 
         # From the UI
@@ -427,7 +452,7 @@ def send_email_assignments(request):
             resp = requests.post(
                 CANVAS_CONV_URL,
                 headers={
-                    "Authorization": f"Bearer {YOUR_ACCESS_TOKEN}",
+                    "Authorization": f"Bearer {token}",
                     "Content-Type": "application/json",
                 },
                 json=payload

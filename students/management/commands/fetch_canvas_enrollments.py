@@ -6,8 +6,9 @@ import requests
 import pandas as pd
 from ast import literal_eval
 from datetime import datetime
+import time
 
-from django.core.management.base import BaseCommand
+from django.core.management.base import BaseCommand, CommandError
 from django.conf import settings
 
 class Command(BaseCommand):
@@ -20,24 +21,57 @@ class Command(BaseCommand):
 
         final_cleaned_file = os.path.join(output_dir, 'cleaned_enrollments_data.xlsx')
 
-        bearer_token = "13~z9rZFUBQVkNnCrHctw4KBDHauRA43DWVEuzNKrHW2Pe8EtfMZDThaLRNZu63xyDJ"
+        # Tunables
+        REQUEST_TIMEOUT = float(os.getenv("CANVAS_TIMEOUT", "30"))
+        RETRY_LIMIT = int(os.getenv("CANVAS_RETRIES", "3"))
+        BACKOFF_SECONDS = float(os.getenv("CANVAS_BACKOFF", "0.5"))
+        LOG_LEVEL = os.getenv("CANVAS_LOG_LEVEL", "INFO").upper()
+
+        bearer_token = os.getenv("CANVAS_API_TOKEN") or getattr(settings, "CANVAS_API_TOKEN", "")
+        if not bearer_token:
+            raise CommandError("CANVAS_API_TOKEN not configured")
         headers = {"Authorization": f"Bearer {bearer_token}"}
 
-        course_ids = [
-            "1987936", "1995292","1995626", "1985532"
-        ]
+        def _get_course_ids():
+            raw = os.getenv("CANVAS_COURSE_IDS") or getattr(settings, "CANVAS_COURSE_IDS", "")
+            if isinstance(raw, (list, tuple)):
+                ids = [str(c).strip() for c in raw if str(c).strip()]
+            else:
+                ids = [cid.strip() for cid in str(raw).split(",") if cid.strip()]
+            if not ids:
+                raise CommandError("CANVAS_COURSE_IDS not configured or empty")
+            return ids
+
+        course_ids = _get_course_ids()
 
         def get_all_data(api_url, headers):
             all_data = []
+            attempts = 0
+            logger = logging.getLogger(__name__)
             while api_url:
-                response = requests.get(api_url, headers=headers)
-                if response.status_code == 200:
-                    data = response.json()
-                    all_data.extend(data)
-                    api_url = response.links['next']['url'] if 'next' in response.links else None
-                else:
-                    logging.warning(f"Failed to fetch data. Status code: {response.status_code}")
-                    break
+                try:
+                    response = requests.get(api_url, headers=headers, timeout=REQUEST_TIMEOUT)
+                    if response.status_code == 429:
+                        attempts += 1
+                        if attempts > RETRY_LIMIT:
+                            logger.error(f"Rate limit exceeded for {api_url}; giving up.")
+                            break
+                        time.sleep(BACKOFF_SECONDS * attempts)
+                        continue
+                    if response.status_code == 200:
+                        data = response.json()
+                        all_data.extend(data)
+                        api_url = response.links['next']['url'] if 'next' in response.links else None
+                        attempts = 0
+                    else:
+                        logger.warning(f"Failed to fetch data. Status code: {response.status_code}")
+                        break
+                except requests.exceptions.RequestException as e:
+                    attempts += 1
+                    if attempts > RETRY_LIMIT:
+                        logger.error(f"Failed to fetch data from {api_url}: {e}")
+                        break
+                    time.sleep(BACKOFF_SECONDS * attempts)
             return all_data
 
         def clean_data(df):
@@ -46,7 +80,8 @@ class Command(BaseCommand):
 
             df['inactive_days'] = (current_date - df['last_activity_at']).dt.days
             df['inactive_days'] = df['inactive_days'].apply(lambda x: max(x, 0) if pd.notnull(x) else None)
-            df['total_activity_time(in_hrs)'] = df['total_activity_time'] / 3600
+            if 'total_activity_time' in df.columns:
+                df['total_activity_time(in_hrs)'] = df['total_activity_time'] / 3600
 
             columns_to_keep = [
                 'user_id', 'type', 'role', 'last_activity_at', 'inactive_days',
@@ -87,28 +122,41 @@ class Command(BaseCommand):
 
         all_dataframes = []
 
+        # Logging setup (file + stream)
+        log_file = os.path.join(output_dir, 'enrollments_api.log')
+        logger = logging.getLogger(__name__)
+        logger.setLevel(LOG_LEVEL)
+        logger.handlers = []
+        fmt = logging.Formatter("%(asctime)s - %(levelname)s - %(message)s")
+        sh = logging.StreamHandler()
+        sh.setFormatter(fmt)
+        fh = RotatingFileHandler(log_file, maxBytes=100000, backupCount=3)
+        fh.setFormatter(fmt)
+        logger.addHandler(sh)
+        logger.addHandler(fh)
+
         for course_id in course_ids:
             api_url = f"https://usflearn.instructure.com/api/v1/courses/{course_id}/enrollments"
             raw_file = os.path.join(output_dir, f'enrollments_raw_{course_id}.xlsx')
             cleaned_file = os.path.join(output_dir, f'enrollments_cleaned_{course_id}.xlsx')
 
-            logging.info("Starting data fetch from Canvas API...")
+            logger.info(f"Starting data fetch from Canvas API for course {course_id}...")
             all_data = get_all_data(api_url, headers)
 
             if all_data:
                 df_raw = pd.DataFrame(all_data)
                 df_raw.to_excel(raw_file, index=False)
-                logging.info(f"Raw data saved to: {raw_file}")
+                logger.info(f"Raw data saved to: {raw_file}")
 
                 df_cleaned = clean_data(df_raw)
                 df_cleaned.to_excel(cleaned_file, index=False)
-                logging.info(f"Cleaned data saved to: {cleaned_file}")
+                logger.info(f"Cleaned data saved to: {cleaned_file}")
 
                 all_dataframes.append(df_cleaned)
                 self.stdout.write(self.style.SUCCESS(f"Raw file saved: {raw_file}"))
                 self.stdout.write(self.style.SUCCESS(f"Cleaned file saved: {cleaned_file}"))
             else:
-                logging.warning("No data was fetched from the API.")
+                logger.warning("No data was fetched from the API.")
                 self.stdout.write(self.style.WARNING(f"No data fetched from API for course {course_id}"))
 
         if all_dataframes:
