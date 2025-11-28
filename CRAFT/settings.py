@@ -13,6 +13,13 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 import os 
 from pathlib import Path
 
+try:
+    # Optional: load .env for local/dev. In production, rely on Azure env/Key Vault.
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 LOGIN_URL = '/login/'
@@ -22,13 +29,13 @@ LOGIN_REDIRECT_URL = '/'
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-$2ou4+**%$9rc6lt4k96f!&4g&&g3c3d3-zi4f-#=5pfceix=='
+SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', 'CHANGE_ME')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv('DJANGO_DEBUG', 'False').lower() == 'true'
 
 #ALLOWED_HOSTS = ['asp-ined-internal-a7c9gmg3f5h7escb.eastus-01.azurewebsites.net','127.0.0.1', 'localhost',]
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = os.getenv('DJANGO_ALLOWED_HOSTS', '*').split(',')
 
 # Application definition
 
@@ -85,14 +92,14 @@ WSGI_APPLICATION = 'CRAFT.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'mssql',  # Use the correct backend name
-        'NAME': 'InEdSQLInternal',
-        'USER':'craftlogindb',
-        'PASSWORD':'wNKqXIvQ1vVzFnGcMDyT',
-        'HOST': 'inedsqldbserverdb01.database.windows.net',
-        'PORT': '1433',  # Default port (1433)
+        'NAME': os.getenv('DB_NAME', ''),
+        'USER': os.getenv('DB_USER', ''),
+        'PASSWORD': os.getenv('DB_PASSWORD', ''),
+        'HOST': os.getenv('DB_HOST', ''),
+        'PORT': os.getenv('DB_PORT', '1433'),  # Default port (1433)
         'OPTIONS': {
-            'driver': 'ODBC Driver 18 for SQL Server',
-            'extra_params': 'Encrypt=Yes;TrustServerCertificate=Yes',  # Critical fix
+            'driver': os.getenv('DB_DRIVER', 'ODBC Driver 18 for SQL Server'),
+            'extra_params': os.getenv('DB_EXTRA_PARAMS', 'Encrypt=Yes;TrustServerCertificate=Yes'),  # Critical fix
         },
     }
 }
@@ -173,7 +180,11 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-# Auto-logout after 15 minutes (900 seconds) of inactivity
-SESSION_COOKIE_AGE = 900  # seconds (15 minutes)
+# Auto-logout after inactivity (seconds)
+SESSION_COOKIE_AGE = int(os.getenv('SESSION_COOKIE_AGE', '900'))
 SESSION_SAVE_EVERY_REQUEST = True
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+
+# External service tokens / config
+CANVAS_API_TOKEN = os.getenv('CANVAS_API_TOKEN', '')
+CANVAS_COURSE_IDS = os.getenv('CANVAS_COURSE_IDS', '')

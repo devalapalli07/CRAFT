@@ -39,7 +39,7 @@
                 <label for="section">Section:</label>
                 <select id="section" name="section" multiple onchange="updateStudentList()">
                     {% for section in sections %}
-                        <option value="{{ section }}">{{ section }}</option>
+                        <option value="{{ section.value }}" title="{{ section.full }}">{{ section.label }}</option>
                     {% endfor %}
                 </select>
 
@@ -76,7 +76,7 @@
                         <td>{{ student.name }}</td>
                         <td>{{ student.email }}</td>
                         <td class="student-id-cell">{{ student.sis_id }}</td>
-                        <td class="section-name-cell">{{ student.section_name|slice:"11:" }}</td>
+                        <td class="section-name-cell">{{ student.section_name }}</td>
                     </tr>
                     {% endfor %}
                 </tbody>
@@ -147,7 +147,7 @@ Professor
                                 <td>${student.name}</td>
                                 <td>${student.email}</td>
                                 <td class="sis-id-cell">${student.sis_id}</td>
-                                <td class="section-name-cell">${student.section_name.slice(11)}</td>
+                                <td class="section-name-cell">${student.section_name}</td>
                             </tr>`;
                         tbody.append(row);
                     });
