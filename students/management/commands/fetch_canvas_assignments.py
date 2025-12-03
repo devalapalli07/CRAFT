@@ -89,6 +89,12 @@ class Command(BaseCommand):
                             return student_id, results or None
                         time.sleep(BACKOFF_SECONDS * attempts)
                         continue
+                    if resp.status_code in (400, 401, 403, 404):
+                        # unrecoverable for this student/course; don't burn retries
+                        logger.error(
+                            f"Non-retryable status {resp.status_code} for student {student_id} course {course_id}; skipping."
+                        )
+                        return student_id, results or None
                     resp.raise_for_status()
                     data = resp.json()
                     if isinstance(data, list):
